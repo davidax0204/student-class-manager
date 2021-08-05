@@ -1,0 +1,83 @@
+<div class="main-content-inner-part">
+  <form id="sign-up-form"
+        [formGroup]="signUpForm"
+        (ngSubmit)="onSubmitSignUpForm()">
+    <div class="container">
+
+      <h1>Student Registration</h1>
+
+      <p>Please fill this form to create a student account.</p>
+
+      <hr>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Name</b></label>
+        <input type="text"
+               placeholder="Enter first name"
+               formControlName="firstName">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="firstName.touched && firstName.invalid">{{invalidFirstNameMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Last Name</b></label>
+        <input type="text"
+               placeholder="Enter last name"
+               formControlName="lastName">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="lastName.touched && lastName.invalid">{{invalidLastNameMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Email</b></label>
+        <input type="text"
+               placeholder="Enter email"
+               formControlName="email">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="email.touched && email.invalid">{{invalidEmailMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label for="password"><b>Password</b></label>
+        <input type="password"
+               placeholder="Enter password"
+               formControlName="password">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="password.touched && password.invalid">{{invalidPassword()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Reapet on Password</b></label>
+        <input type="password"
+               placeholder="Reapet on password"
+               formControlName="passwordRepeated">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="passwordRepeated.touched && (passwordRepeated.invalid || signUpForm.errors?.passwordnotrepeated)">
+        {{invalidPsswordRepeatedMessage()}}
+      </div>
+
+      <hr>
+
+      <button type="submit"
+              class="registerbtn"
+              [disabled]="signUpForm.invalid">Register</button>
+    </div>
+  </form>
+</div>
+
+
+<div id="myModal"
+     *ngIf="isModalOpen"
+     class="modal">
+  <div class="modal-content">
+    <span (click)="onClickCloseModal()"
+          class="close">&times;</span>
+    <p>{{signInErrorMessage}}.</p>
+  </div>
+</div>
