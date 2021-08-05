@@ -51,14 +51,16 @@
 
   <div class="header-user-button">
     <a>
-      <button routerLink="/sign-in"
+      <button *ngIf="!isAuthenticatedStudent"
+              routerLink="/sign-in"
               class="header-user-button-inner">
         <i id="user"
            class="user-button fa fa-user fa-lg"></i>
       </button>
     </a>
     <a>
-      <button routerLink="sign-up"
+      <button (click)="onSignOut()"
+              *ngIf="isAuthenticatedStudent"
               class="header-user-button-inner">
         <i id="user"
            class="user-button fa fa-sign-out fa-lg"></i>

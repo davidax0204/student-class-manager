@@ -3,7 +3,7 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const studentSchema = new mongoose.Schema({
+const lecturerSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -17,9 +17,9 @@ const studentSchema = new mongoose.Schema({
           throw new Error("The name must contain letters only");
         }
       }
-      if (value.length < 3) {
-        throw new Error("Name is too short, 3 chars min");
-      }
+      // if (value.length < 3) {
+      //   throw new Error("Name is too short, 3 chars min");
+      // }
     },
   },
   lastName: {
@@ -76,48 +76,48 @@ const studentSchema = new mongoose.Schema({
   ],
 });
 
-studentSchema.statics.findByCredentials = async (email, password) => {
-  const student = await Student.findOne({ email });
+lecturerSchema.statics.findByCredentials = async (email, password) => {
+  const lecturer = await Lecturer.findOne({ email });
 
-  if (!student) {
+  if (!lecturer) {
     throw new Error("UNABLE_TO_LOGIN");
   }
 
-  const isMatch = await bcrypt.compare(password, student.password);
+  const isMatch = await bcrypt.compare(password, lecturer.password);
 
   if (!isMatch) {
     throw new Error("UNABLE_TO_LOGIN");
   }
 
-  return student;
+  return lecturer;
 };
 
-studentSchema.methods.generateAuthToken = async function () {
-  const student = this;
+lecturerSchema.methods.generateAuthToken = async function () {
+  const lecturer = this;
   // console.log(process.env.JWT_SECRET)
   const token = jwt.sign(
-    { _id: student._id.toString() },
-    process.env.JWT_SECRET_STUDENT
+    { _id: lecturer._id.toString() },
+    process.env.JWT_SECRET
   );
 
-  student.tokens = student.tokens.concat({ token: token });
+  lecturer.tokens = lecturer.tokens.concat({ token: token });
 
-  await student.save();
+  await lecturer.save();
 
   return token;
 };
 
-studentSchema.pre("save", async function (next) {
-  const student = this;
+lecturerSchema.pre("save", async function (next) {
+  const lecturer = this;
 
-  if (student.isModified("password")) {
-    student.password = await bcrypt.hash(student.password, 8);
+  if (lecturer.isModified("password")) {
+    lecturer.password = await bcrypt.hash(lecturer.password, 8);
   }
 
   next();
 });
 
-studentSchema.post("save", function (error, doc, next) {
+lecturerSchema.post("save", function (error, doc, next) {
   if (error.name === "MongoError" && error.code === 11000) {
     next(new Error("EMAIL_NOT_UNIQUE"));
   } else {
@@ -125,6 +125,6 @@ studentSchema.post("save", function (error, doc, next) {
   }
 });
 
-const Student = mongoose.model("Student", studentSchema);
+const Lecturer = mongoose.model("Lecturer", lecturerSchema);
 
-module.exports = Student;
+module.exports = Lecturer;
