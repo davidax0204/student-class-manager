@@ -1,10 +1,10 @@
-export class Student {
+export class User {
   constructor(
     public firstName: string,
     public lastName: string,
     public email: string,
-    public _id: string,
-    public _token: string
+    private _id: string,
+    private _token: string
   ) {}
 
   get token() {

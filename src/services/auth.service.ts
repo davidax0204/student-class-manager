@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { Student } from 'src/models/student.model';
+import { User } from 'src/models/student.model';
 const mongooseDB = environment.NODEJS_SERVER;
 
 interface AuthResponseStudent {
@@ -17,7 +17,8 @@ interface AuthResponseStudent {
   providedIn: 'root',
 })
 export class AuthService {
-  student = new BehaviorSubject<Student>(null);
+  student = new BehaviorSubject<User>(null);
+  lecturer = new BehaviorSubject<User>(null);
   constructor(private http: HttpClient) {}
 
   signUp(firstName: string, lastName: string, email: string, password: string) {
@@ -32,33 +33,32 @@ export class AuthService {
   }
 
   signIn(email: string, password: string, isLecturer: boolean) {
-    if (isLecturer) {
-    } else {
-      return this.http
-        .post<{ student: Student; token: string }>(
-          `${mongooseDB}/student-sign-in`,
-          {
-            email,
-            password,
-          }
-        )
-        .pipe(
-          catchError(this.handleError),
-          map((resData) => {
-            this.handleAuthentication(
-              resData.student.firstName,
-              resData.student.lastName,
-              resData.student.email,
-              resData.student._id,
-              resData.token
-            );
-          })
-        );
-    }
+    return this.http
+      .post<{ student: User; token: string }>(`${mongooseDB}/student-sign-in`, {
+        email,
+        password,
+        isLecturer,
+      })
+      .pipe(
+        catchError(this.handleError),
+        map((resData) => {
+          this.handleAuthentication(
+            resData.student.firstName,
+            resData.student.lastName,
+            resData.student.email,
+            resData.student.token,
+            resData.token,
+            isLecturer
+          );
+        })
+      );
   }
 
   signOut() {
     this.student.next(null);
+    this.lecturer.next(null);
+    localStorage.removeItem('userData');
+    localStorage.removeItem('lecturerData');
   }
 
   private handleAuthentication(
@@ -66,15 +66,24 @@ export class AuthService {
     lastName: string,
     email: string,
     userId: string,
-    token: string
+    token: string,
+    isLecturer: boolean
   ) {
-    const student = new Student(firstName, lastName, email, userId, token);
-    this.student.next(student);
-    localStorage.setItem('studentData', JSON.stringify(student));
+    if (isLecturer) {
+      const lecturer = new User(firstName, lastName, email, userId, token);
+      this.lecturer.next(lecturer);
+      localStorage.setItem('lecturerData', JSON.stringify(lecturer));
+    } else {
+      const student = new User(firstName, lastName, email, userId, token);
+      this.student.next(student);
+      localStorage.setItem('studentData', JSON.stringify(student));
+    }
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
     let errorMessage = 'An Unknown error occurred!';
+
+    console.log(errorResponse);
 
     if (!errorResponse.error) {
       return throwError(errorMessage);

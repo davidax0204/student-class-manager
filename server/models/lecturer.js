@@ -97,7 +97,7 @@ lecturerSchema.methods.generateAuthToken = async function () {
   // console.log(process.env.JWT_SECRET)
   const token = jwt.sign(
     { _id: lecturer._id.toString() },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET_LECTURER
   );
 
   lecturer.tokens = lecturer.tokens.concat({ token: token });
