@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const studentRouter = require("./routers/lecturer");
 require("../server/db/mongoose");
 
 const app = express();
@@ -34,5 +35,7 @@ app.use(
     extended: true,
   })
 );
+
+app.use(studentRouter);
 
 module.exports = app;
