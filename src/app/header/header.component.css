@@ -1,0 +1,230 @@
+/* .nav-container
+{
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #fff;
+    background: #ffffff;
+    position: fixed;
+    z-index: 10;
+    box-shadow: rgba(44, 51, 73, 0.1) 0px 8px 16px 0px;
+} */
+.navigation-bar {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 850px;
+  width: 100%;
+  height: 76px;
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  vertical-align: middle;
+  /* align-self: flex-end; */
+  background: rgb(255, 255, 255);
+  z-index: 100;
+}
+.logo-container {
+  background: #ffffff;
+  padding: 0.5rem;
+  width: 15%;
+}
+.header-logo {
+  height: 100%;
+}
+.search-container {
+  width: 70%;
+  background: #ffffff;
+  /* vertical-align: middle; */
+  display: flex;
+  align-items: center;
+}
+.search-container input[type="text"] {
+  background-color: #f1f1f1;
+  padding-left: 10px;
+  font-size: 15px;
+  width: 80%;
+  flex-direction: row;
+  height: 35px;
+  border: none;
+}
+
+button i {
+  margin-left: auto;
+  margin-right: auto;
+}
+form.search-container button {
+  height: 37px;
+  width: 20%;
+  margin-left: 5px;
+  background: #2196f3;
+  color: white;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+  border: none;
+}
+form.search-container button:hover,
+.header-user-button button:hover {
+  background: #0b7dda;
+}
+/* .header-user-button-inner i
+  {
+    margin-left:5px;
+  } */
+.header-user-button {
+  width: 15%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-user-button button {
+  border: none;
+}
+.header-user-button-inner-admin {
+  border: none;
+  height: 37px;
+  margin-left: 5px;
+  background: #2196f3;
+  color: white;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+  /* margin-right: auto;
+    margin-left: auto; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* min-width: 93px !important; */
+}
+.header-user-button-inner {
+  border: none;
+  height: 37px;
+  width: 37px;
+  margin-left: 5px;
+  background: #2196f3;
+  color: white;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+  /* margin-right: auto;
+    margin-left: auto; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* min-width: 93px !important; */
+}
+.mobile-menu {
+  display: none;
+}
+@media (max-width: 770px) {
+  .search-container {
+    display: none;
+  }
+  .header-user-button {
+    display: none;
+  }
+  .mobile-menu {
+    display: unset;
+  }
+  .container-admin {
+    display: none !important;
+  }
+}
+
+.mobile-menu {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+}
+
+.main-menu {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+  border: 0;
+  background: none;
+}
+.menu-butttonnnn:hover {
+  text-decoration: None !important;
+}
+.main-menu:focus,
+.main-menu:hover {
+  outline: none !important;
+  overflow: hidden !important;
+}
+.menu-line {
+  height: 3px;
+  width: 25px;
+  background: #374f60;
+  margin: 2px 0;
+  color: #374f60;
+}
+.open > #menu-line-top {
+  transform: translateY(10px) translateX(0px) rotate(45deg);
+}
+.open > #menu-line-middle {
+  opacity: 0;
+  transform: translate(1px);
+}
+.open > #menu-line-bottom {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.mobile-menu #myLinks {
+  display: none;
+}
+
+.mobile-menu a {
+  width: 90vw;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+  background-color: #2196f3;
+}
+.mobile-menu a:hover {
+  background-color: #0b7dda;
+}
+.mobile-menu-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-menu-search-container input[type="text"] {
+  font-size: 15px;
+  width: 70%;
+  height: 35px;
+  border: none;
+  padding-left: 10px;
+}
+.mobile-menu-search-container button {
+  border: none;
+  height: 37px;
+  width: 20%;
+  margin-left: 5px;
+  background: white;
+  color: #2196f3;
+  /* border: 1px solid grey; */
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+.header-user-button a {
+  text-decoration: none;
+}
+
+.mobile-menu main-menu:hover {
+  text-decoration: none;
+}
+
+.noHover {
+  pointer-events: none;
+}

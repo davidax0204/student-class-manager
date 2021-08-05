@@ -1,0 +1,60 @@
+<div class="main-content-inner-part">
+  <form id="sign-up-form"
+        [formGroup]="signInForm"
+        (ngSubmit)="onSubmitSignInForm()">
+    <div class="container">
+
+      <h1 *ngIf="!isLecturer">Student - Login</h1>
+      <h1 *ngIf="isLecturer">Lecturer - Login</h1>
+
+      <p>Please fill in this form to login.</p>
+
+      <hr>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Email</b></label>
+        <input type="text"
+               placeholder="Enter email"
+               formControlName="email">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="email.touched && email.invalid">{{invalidEmailMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label for="password"><b>Password</b></label>
+        <input type="password"
+               placeholder="Enter password"
+               formControlName="password">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="password.touched && password.invalid">{{invalidPassword()}}</div>
+
+      <hr>
+
+      <button type="submit"
+              class="registerbtn"
+              [disabled]="signInForm.invalid">Sign-in</button>
+
+      <button *ngIf="!isLecturer"
+              (click)="onAdminButtonClick()"
+              class="registerbtn">Lecturer ?</button>
+
+      <button *ngIf="isLecturer"
+              (click)="onAdminButtonClick()"
+              class="registerbtn">Student ?</button>
+
+    </div>
+  </form>
+</div>
+
+<div id="myModal"
+     *ngIf="isModalOpen"
+     class="modal">
+  <div class="modal-content">
+    <span (click)="onClickCloseModal()"
+          class="close">&times;</span>
+    <p>{{signInErrorMessage}}.</p>
+  </div>
+</div>
