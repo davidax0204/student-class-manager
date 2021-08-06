@@ -12,6 +12,8 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 import { LecturerAuthService } from 'src/services/lecturer-auth.service';
 import { LecturerProfileComponent } from './lecturer-profile/lecturer-profile.component';
 import { AuthInterceptor } from 'src/interceptors/auth.interceptor';
+import { StudentAuthGuard } from '../auth-guards/student-auth.guard';
+import { LecturerAuthGuard } from 'src/auth-guards/lecturer-auth.guard';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { AuthInterceptor } from 'src/interceptors/auth.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    StudentAuthGuard,
+    LecturerAuthGuard,
   ],
   bootstrap: [AppComponent],
 })
