@@ -18,6 +18,14 @@ router.post("/student-sign-in", async (req, res) => {
   }
 });
 
+router.post("/sutdent-profile/edit", async (req, res) => {
+  try {
+    console.log(req.query);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 module.exports = router;
 
 // const lecturer = new Lecturer({

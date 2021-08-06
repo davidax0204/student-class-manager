@@ -66,7 +66,7 @@ export class StudentAuthService {
     this.router.navigate(['/sign-in']);
   }
 
-  private handleAuthentication(
+  public handleAuthentication(
     firstName: string,
     lastName: string,
     email: string,
@@ -78,7 +78,7 @@ export class StudentAuthService {
     localStorage.setItem('studentData', JSON.stringify(student));
   }
 
-  private handleError(errorResponse: HttpErrorResponse) {
+  public handleError(errorResponse: HttpErrorResponse) {
     let errorMessage = 'An Unknown error occurred!';
 
     if (!errorResponse.error) {

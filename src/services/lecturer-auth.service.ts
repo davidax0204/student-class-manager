@@ -42,7 +42,7 @@ export class LecturerAuthService {
             resData.lecturer.firstName,
             resData.lecturer.lastName,
             resData.lecturer.email,
-            resData.lecturer.token,
+            resData.lecturer._id,
             resData.token
           );
         })
@@ -53,6 +53,28 @@ export class LecturerAuthService {
     this.lecturer.next(null);
     localStorage.clear();
     this.router.navigate(['/sign-in']);
+  }
+
+  autoLogin() {
+    const lecturerData: Lecturer = JSON.parse(
+      localStorage.getItem('lecturerData')
+    );
+
+    if (!lecturerData) {
+      return;
+    }
+
+    const loadedLecturer = new Lecturer(
+      lecturerData.firstName,
+      lecturerData.lastName,
+      lecturerData.email,
+      lecturerData._id,
+      lecturerData._token
+    );
+
+    if (loadedLecturer._token) {
+      this.lecturer.next(loadedLecturer);
+    }
   }
 
   private handleAuthentication(

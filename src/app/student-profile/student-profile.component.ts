@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { Student } from 'src/models/student.model';
 import { LecturerAuthService } from 'src/services/lecturer-auth.service';
 import { StudentAuthService } from 'src/services/student-auth.service';
+import { StudentService } from 'src/services/student.service';
 
 @Component({
   selector: 'app-student-profile',
@@ -33,8 +34,8 @@ export class StudentProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
-    private AuthService: StudentAuthService
+    private StudentAuthService: StudentAuthService,
+    private StudentService: StudentService
   ) {
     this.profilePage = this.formBuilder.group(
       {
@@ -57,7 +58,7 @@ export class StudentProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.studentSub = this.AuthService.student.subscribe((student) => {
+    this.studentSub = this.StudentAuthService.student.subscribe((student) => {
       this.activeStudent = !student ? null : student;
       if (this.activeStudent) {
         this.profilePage.controls['firstName'].setValue(
@@ -149,7 +150,13 @@ export class StudentProfileComponent implements OnInit, OnDestroy {
     this.isModalOpen = false;
   }
 
-  onClickLogOut() {}
-
-  onSubmitProfileEditForm() {}
+  onSubmitProfileEditForm() {
+    if (!this.password.value) {
+      this.StudentService.editProfile(
+        this.firstName.value,
+        this.lastName.value,
+        this.email.value
+      );
+    }
+  }
 }
