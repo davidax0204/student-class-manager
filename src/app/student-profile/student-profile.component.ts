@@ -156,6 +156,31 @@ export class StudentProfileComponent implements OnInit, OnDestroy {
         this.firstName.value,
         this.lastName.value,
         this.email.value
+      ).subscribe(
+        () => {
+          this.isModalOpen = true;
+          this.msg = 'Your changes are successfully saved';
+        },
+        (errorMessage) => {
+          this.isModalOpen = true;
+          this.msg = errorMessage;
+        }
+      );
+    } else {
+      this.StudentService.editProfile(
+        this.firstName.value,
+        this.lastName.value,
+        this.email.value,
+        this.password.value
+      ).subscribe(
+        () => {
+          this.isModalOpen = true;
+          this.msg = 'Your changes are successfully saved';
+        },
+        (errorMessage) => {
+          this.isModalOpen = true;
+          this.msg = errorMessage;
+        }
       );
     }
   }

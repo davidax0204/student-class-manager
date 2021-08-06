@@ -94,7 +94,7 @@ lecturerSchema.statics.findByCredentials = async (email, password) => {
 
 lecturerSchema.methods.generateAuthToken = async function () {
   const lecturer = this;
-  // console.log(process.env.JWT_SECRET)
+
   const token = jwt.sign(
     { _id: lecturer._id.toString() },
     process.env.JWT_SECRET_LECTURER

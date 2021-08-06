@@ -1,6 +1,7 @@
 const express = require("express");
 const Student = require("../models/student");
 const Lecturer = require("../models/lecturer");
+const auth = require("../middleware/auth");
 
 const router = new express.Router();
 
@@ -18,11 +19,17 @@ router.post("/student-sign-in", async (req, res) => {
   }
 });
 
-router.post("/sutdent-profile/edit", async (req, res) => {
+router.post("/student-profile/edit", auth, async (req, res) => {
+  const updates = Object.keys(req.body);
   try {
-    console.log(req.query);
+    const student = req.student;
+    const token = req.query.auth;
+    updates.forEach((update) => (student[update] = req.body[update]));
+    await student.save();
+    res.status(200).send({ student, token });
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
+    res.status(400).send(e.message);
   }
 });
 

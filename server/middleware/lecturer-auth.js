@@ -1,21 +1,21 @@
 const jwt = require("jsonwebtoken");
-const Student = require("../models/student");
+const Lecturer = require("../models/lecturer");
 
 const auth = async (req, res, next) => {
   try {
     const token = req.query.auth;
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_STUDENT);
-    const student = await Student.findOne({
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_LECTURER);
+    const lecturer = await Lecturer.findOne({
       _id: decoded._id,
       "tokens.token": token,
     });
 
-    if (!student) {
+    if (!lecturer) {
       throw new Error();
     }
     // create a verubale inside of req names user with the datas of the fetched user
     req.token = token;
-    req.student = student;
+    req.lecturer = lecturer;
 
     next();
   } catch (e) {

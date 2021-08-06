@@ -77,7 +77,7 @@ export class LecturerAuthService {
     }
   }
 
-  private handleAuthentication(
+  public handleAuthentication(
     firstName: string,
     lastName: string,
     email: string,
@@ -89,7 +89,7 @@ export class LecturerAuthService {
     localStorage.setItem('lecturerData', JSON.stringify(lecturer));
   }
 
-  private handleError(errorResponse: HttpErrorResponse) {
+  public handleError(errorResponse: HttpErrorResponse) {
     let errorMessage = 'An Unknown error occurred!';
 
     if (!errorResponse.error) {

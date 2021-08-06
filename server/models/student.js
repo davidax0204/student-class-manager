@@ -94,7 +94,7 @@ studentSchema.statics.findByCredentials = async (email, password) => {
 
 studentSchema.methods.generateAuthToken = async function () {
   const student = this;
-  // console.log(process.env.JWT_SECRET)
+
   const token = jwt.sign(
     { _id: student._id.toString() },
     process.env.JWT_SECRET_STUDENT

@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { Student } from 'src/models/student.model';
 import { StudentAuthService } from './student-auth.service';
@@ -10,7 +12,11 @@ const mongooseDB = environment.NODEJS_SERVER;
   providedIn: 'root',
 })
 export class StudentService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private StudentAuthService: StudentAuthService
+  ) {}
 
   editProfile(
     firstName: string,
@@ -19,12 +25,26 @@ export class StudentService {
     password?: string
   ) {
     return this.http
-      .post(`${mongooseDB}/sutdent-profile/edit`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      })
-      .subscribe();
+      .post<{ student: Student; token: string }>(
+        `${mongooseDB}/student-profile/edit`,
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        }
+      )
+      .pipe(
+        catchError(this.StudentAuthService.handleError),
+        map((resData) => {
+          this.StudentAuthService.handleAuthentication(
+            resData.student.firstName,
+            resData.student.lastName,
+            resData.student.email,
+            resData.student._id,
+            resData.token
+          );
+        })
+      );
   }
 }

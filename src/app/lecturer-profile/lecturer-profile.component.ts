@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Lecturer } from 'src/models/lecturer.model';
 import { LecturerAuthService } from 'src/services/lecturer-auth.service';
+import { LecturerService } from 'src/services/lecturer.service';
 import { StudentAuthService } from 'src/services/student-auth.service';
 
 @Component({
@@ -33,8 +34,8 @@ export class LecturerProfileComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
-    private LecturerAuthService: LecturerAuthService
+    private LecturerAuthService: LecturerAuthService,
+    private LecturerService: LecturerService
   ) {
     this.profilePage = this.formBuilder.group(
       {
@@ -155,5 +156,36 @@ export class LecturerProfileComponent implements OnInit {
 
   onClickLogOut() {}
 
-  onSubmitProfileEditForm() {}
+  onSubmitProfileEditForm() {
+    if (!this.password.value) {
+      this.LecturerService.editProfile(
+        this.firstName.value,
+        this.lastName.value
+      ).subscribe(
+        () => {
+          this.isModalOpen = true;
+          this.msg = 'Your changes are successfully saved';
+        },
+        (errorMessage) => {
+          this.isModalOpen = true;
+          this.msg = errorMessage;
+        }
+      );
+    } else {
+      this.LecturerService.editProfile(
+        this.firstName.value,
+        this.lastName.value,
+        this.password.value
+      ).subscribe(
+        () => {
+          this.isModalOpen = true;
+          this.msg = 'Your changes are successfully saved';
+        },
+        (errorMessage) => {
+          this.isModalOpen = true;
+          this.msg = errorMessage;
+        }
+      );
+    }
+  }
 }

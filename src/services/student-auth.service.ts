@@ -74,11 +74,14 @@ export class StudentAuthService {
     token: string
   ) {
     const student = new Student(firstName, lastName, email, userId, token);
+    console.log(student);
     this.student.next(student);
     localStorage.setItem('studentData', JSON.stringify(student));
   }
 
   public handleError(errorResponse: HttpErrorResponse) {
+    console.log('here');
+
     let errorMessage = 'An Unknown error occurred!';
 
     if (!errorResponse.error) {
@@ -98,6 +101,7 @@ export class StudentAuthService {
         errorMessage = 'The Email is invalid';
         break;
     }
+    console.log(errorMessage);
 
     return throwError(errorMessage);
   }
