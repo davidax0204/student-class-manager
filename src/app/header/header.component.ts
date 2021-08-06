@@ -12,19 +12,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private studentSub: Subscription;
   isAuthenticatedStudent: boolean = false;
 
-  constructor(private AuthService: StudentAuthService) {}
+  private lecturerSub: Subscription;
+  isAuthenticatedLecturer: boolean = false;
+
+  constructor(
+    private StudentAuthService: StudentAuthService,
+    private LecturerAuthService: LecturerAuthService
+  ) {}
 
   ngOnInit(): void {
-    this.studentSub = this.AuthService.student.subscribe((student) => {
+    this.studentSub = this.StudentAuthService.student.subscribe((student) => {
       this.isAuthenticatedStudent = !student ? false : true;
     });
+    this.lecturerSub = this.LecturerAuthService.lecturer.subscribe(
+      (lecutrer) => {
+        this.isAuthenticatedLecturer = !lecutrer ? false : true;
+        this.isAuthenticatedStudent = false;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.studentSub.unsubscribe();
+    this.lecturerSub.unsubscribe();
   }
 
-  onSignOut() {
-    this.AuthService.signOut();
+  onStudentSignOut() {
+    this.StudentAuthService.signOut();
+  }
+
+  onLecturerSignOut() {
+    this.LecturerAuthService.signOut();
   }
 }

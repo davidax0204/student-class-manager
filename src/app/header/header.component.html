@@ -1,4 +1,5 @@
-<div class="navigation-bar">
+<div *ngIf="isAuthenticatedStudent"
+     class="navigation-bar">
 
   <div class="mobile-menu ">
     <button class="main-menu menu-butttonnnn">
@@ -59,8 +60,62 @@
       </button>
     </a>
     <a>
-      <button (click)="onSignOut()"
+      <button (click)="onStudentSignOut()"
               *ngIf="isAuthenticatedStudent"
+              class="header-user-button-inner">
+        <i id="user"
+           class="user-button fa fa-sign-out fa-lg"></i>
+      </button>
+    </a>
+  </div>
+
+</div>
+
+
+<div *ngIf="isAuthenticatedLecturer"
+     class="navigation-bar">
+
+  <div class="mobile-menu ">
+    <button class="main-menu menu-butttonnnn">
+      <div class="menu-line"
+           id="menu-line-top"></div>
+      <div class="menu-line"
+           id="menu-line-middle"></div>
+      <div class="menu-line"
+           id="menu-line-bottom"></div>
+    </button>
+    <div id="myLinks">
+      <a class="mobile-menu-search-container">
+        <input type="text"
+               placeholder="Search for a movie">
+        <button type="submit"
+                id="mobile-menu-search-button"><i class="fa fa-search"></i></button>
+      </a>
+
+      <a href="/profile">
+        <span>Profile </span>
+        <i class="user-button fa fa-user"></i>
+      </a>
+      <a href="/sign-up">
+        <span>Sign in/Join </span>
+        <i class="user-button fa fa-sign-in"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="logo-container">
+    <a routerLink="/home">
+
+      <img class="header-logo"
+           src="assets/pictures/Logo.png">
+
+    </a>
+  </div>
+
+
+  <div class="header-user-button">
+    <a>
+      <button (click)="onLecturerSignOut()"
               class="header-user-button-inner">
         <i id="user"
            class="user-button fa fa-sign-out fa-lg"></i>

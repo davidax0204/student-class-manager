@@ -50,6 +50,7 @@ export class LecturerAuthService {
   }
 
   signOut() {
+    this.http.get(`${mongooseDB}/lecturer-log-out`).subscribe();
     this.lecturer.next(null);
     localStorage.clear();
     this.router.navigate(['/sign-in']);

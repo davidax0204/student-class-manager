@@ -43,4 +43,14 @@ router.post("/lecturer-profile/edit", lecturerAuth, async (req, res) => {
   }
 });
 
+router.get("/lecturer-log-out", lecturerAuth, async (req, res) => {
+  try {
+    req.lecturer.tokens = [];
+    await req.lecturer.save();
+    res.status(200).send();
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
 module.exports = router;

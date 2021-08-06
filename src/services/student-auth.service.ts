@@ -61,6 +61,7 @@ export class StudentAuthService {
   }
 
   signOut() {
+    this.http.get(`${mongooseDB}/student-log-out`).subscribe();
     this.student.next(null);
     localStorage.clear();
     this.router.navigate(['/sign-in']);

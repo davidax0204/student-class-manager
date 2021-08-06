@@ -33,6 +33,16 @@ router.post("/student-profile/edit", auth, async (req, res) => {
   }
 });
 
+router.get("/student-log-out", auth, async (req, res) => {
+  try {
+    req.student.tokens = [];
+    await req.student.save();
+    res.status(200).send();
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
 module.exports = router;
 
 // const lecturer = new Lecturer({
