@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/services/auth.service';
+import { LecturerAuthService } from 'src/services/lecturer-auth.service';
+import { StudentAuthService } from 'src/services/student-auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -20,7 +21,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private AuthService: AuthService
+    private StudentAuthService: StudentAuthService,
+    private LecturerAuthService: LecturerAuthService
   ) {
     this.signInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -57,18 +59,32 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmitSignInForm() {
-    this.AuthService.signIn(
-      this.email.value,
-      this.password.value,
-      this.isLecturer
-    ).subscribe(
-      () => {
-        this.router.navigate(['/profile']);
-      },
-      (errorMessage) => {
-        this.signInErrorMessage = errorMessage;
-        this.isModalOpen = true;
-      }
-    );
+    if (!this.isLecturer) {
+      this.StudentAuthService.signIn(
+        this.email.value,
+        this.password.value
+      ).subscribe(
+        () => {
+          this.router.navigate(['/student-profile']);
+        },
+        (errorMessage) => {
+          this.signInErrorMessage = errorMessage;
+          this.isModalOpen = true;
+        }
+      );
+    } else {
+      this.LecturerAuthService.signIn(
+        this.email.value,
+        this.password.value
+      ).subscribe(
+        () => {
+          this.router.navigate(['/lecturer-profile']);
+        },
+        (errorMessage) => {
+          this.signInErrorMessage = errorMessage;
+          this.isModalOpen = true;
+        }
+      );
+    }
   }
 }

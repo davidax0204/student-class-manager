@@ -3,16 +3,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { User } from 'src/models/student.model';
+import { Lecturer } from 'src/models/lecturer.model';
 import { Router } from '@angular/router';
 const mongooseDB = environment.NODEJS_SERVER;
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  student = new BehaviorSubject<User>(null);
-  lecturer = new BehaviorSubject<User>(null);
+export class LecturerAuthService {
+  lecturer = new BehaviorSubject<Lecturer>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -27,30 +26,30 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
-  signIn(email: string, password: string, isLecturer: boolean) {
+  signIn(email: string, password: string) {
     return this.http
-      .post<{ student: User; token: string }>(`${mongooseDB}/student-sign-in`, {
-        email,
-        password,
-        isLecturer,
-      })
+      .post<{ lecturer: Lecturer; token: string }>(
+        `${mongooseDB}/lecturer-sign-in`,
+        {
+          email,
+          password,
+        }
+      )
       .pipe(
         catchError(this.handleError),
         map((resData) => {
           this.handleAuthentication(
-            resData.student.firstName,
-            resData.student.lastName,
-            resData.student.email,
-            resData.student.token,
-            resData.token,
-            isLecturer
+            resData.lecturer.firstName,
+            resData.lecturer.lastName,
+            resData.lecturer.email,
+            resData.lecturer.token,
+            resData.token
           );
         })
       );
   }
 
   signOut() {
-    this.student.next(null);
     this.lecturer.next(null);
     localStorage.clear();
     this.router.navigate(['/sign-in']);
@@ -61,18 +60,11 @@ export class AuthService {
     lastName: string,
     email: string,
     userId: string,
-    token: string,
-    isLecturer: boolean
+    token: string
   ) {
-    if (isLecturer) {
-      const lecturer = new User(firstName, lastName, email, userId, token);
-      this.lecturer.next(lecturer);
-      localStorage.setItem('lecturerData', JSON.stringify(lecturer));
-    } else {
-      const student = new User(firstName, lastName, email, userId, token);
-      this.student.next(student);
-      localStorage.setItem('studentData', JSON.stringify(student));
-    }
+    const lecturer = new Lecturer(firstName, lastName, email, userId, token);
+    this.lecturer.next(lecturer);
+    localStorage.setItem('lecturerData', JSON.stringify(lecturer));
   }
 
   private handleError(errorResponse: HttpErrorResponse) {

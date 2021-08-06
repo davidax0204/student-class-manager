@@ -8,8 +8,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from 'src/models/student.model';
-import { AuthService } from 'src/services/auth.service';
+import { Student } from 'src/models/student.model';
+import { LecturerAuthService } from 'src/services/lecturer-auth.service';
+import { StudentAuthService } from 'src/services/student-auth.service';
 
 @Component({
   selector: 'app-student-profile',
@@ -17,10 +18,8 @@ import { AuthService } from 'src/services/auth.service';
   styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit, OnDestroy {
-  activeStudent: User;
-  activeLecturer: User;
+  activeStudent: Student;
   studentSub: Subscription;
-  lecturerSub: Subscription;
 
   profilePage: FormGroup;
   firstName;
@@ -35,7 +34,7 @@ export class StudentProfileComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private AuthService: AuthService
+    private AuthService: StudentAuthService
   ) {
     this.profilePage = this.formBuilder.group(
       {
@@ -70,23 +69,10 @@ export class StudentProfileComponent implements OnInit, OnDestroy {
         this.profilePage.controls['email'].setValue(this.activeStudent.email);
       }
     });
-    this.lecturerSub = this.AuthService.lecturer.subscribe((lecturer) => {
-      this.activeLecturer = !lecturer ? null : lecturer;
-      if (this.activeLecturer) {
-        this.profilePage.controls['firstName'].setValue(
-          this.activeLecturer.firstName
-        );
-        this.profilePage.controls['lastName'].setValue(
-          this.activeLecturer.lastName
-        );
-        this.profilePage.controls['email'].setValue(this.activeLecturer.email);
-      }
-    });
   }
 
   ngOnDestroy() {
     this.studentSub.unsubscribe();
-    this.lecturerSub.unsubscribe();
   }
 
   invalidFirstNameMessage() {

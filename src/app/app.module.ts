@@ -9,6 +9,8 @@ import { HeaderComponent } from './header/header.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { LecturerAuthService } from 'src/services/lecturer-auth.service';
+import { LecturerProfileComponent } from './lecturer-profile/lecturer-profile.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
     SignInComponent,
     SignUpComponent,
     StudentProfileComponent,
+    LecturerProfileComponent,
   ],
   imports: [
     AppRoutingModule,

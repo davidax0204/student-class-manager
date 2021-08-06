@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LecturerProfileComponent } from './lecturer-profile/lecturer-profile.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
@@ -7,7 +8,8 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'profile', component: StudentProfileComponent },
+  { path: 'student-profile', component: StudentProfileComponent },
+  { path: 'lecturer-profile', component: LecturerProfileComponent },
 ];
 
 @NgModule({

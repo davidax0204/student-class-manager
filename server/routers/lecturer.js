@@ -14,4 +14,18 @@ router.post("/create-user", async (req, res) => {
   }
 });
 
+router.post("/lecturer-sign-in", async (req, res) => {
+  try {
+    const lecturer = await Lecturer.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    const token = await lecturer.generateAuthToken();
+    res.status(200).send({ lecturer, token });
+  } catch (e) {
+    console.log(e.message);
+    res.status(404).send(e.message);
+  }
+});
+
 module.exports = router;

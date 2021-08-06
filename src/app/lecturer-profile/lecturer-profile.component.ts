@@ -7,66 +7,92 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Lecturer } from 'src/models/lecturer.model';
 import { LecturerAuthService } from 'src/services/lecturer-auth.service';
+import { StudentAuthService } from 'src/services/student-auth.service';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css'],
+  selector: 'app-lecturer-profile',
+  templateUrl: './lecturer-profile.component.html',
+  styleUrls: ['./lecturer-profile.component.css'],
 })
-export class SignUpComponent implements OnInit {
-  signUpForm: FormGroup;
+export class LecturerProfileComponent implements OnInit {
+  activeLecturer: Lecturer;
+  lecturerSub: Subscription;
+
+  profilePage: FormGroup;
   firstName;
   lastName;
   email;
   password;
   passwordRepeated;
 
-  submitMessage;
   isModalOpen = false;
+  msg;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private AuthService: LecturerAuthService
+    private LecturerAuthService: LecturerAuthService
   ) {
-    this.signUpForm = this.formBuilder.group(
+    this.profilePage = this.formBuilder.group(
       {
         firstName: ['', [Validators.required, this.firstNameValidator]],
         lastName: ['', [Validators.required, this.lastNameValidator]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, this.passwordValidator]],
-        passwordRepeated: ['', Validators.required],
+        password: ['', this.passwordValidator],
+        passwordRepeated: [''],
       },
       {
         validators: this.passwordRepeatedValidator,
       }
     );
 
-    this.firstName = this.signUpForm.get('firstName');
-    this.lastName = this.signUpForm.get('lastName');
-    this.email = this.signUpForm.get('email');
-    this.password = this.signUpForm.get('password');
-    this.passwordRepeated = this.signUpForm.get('passwordRepeated');
+    this.firstName = this.profilePage.get('firstName');
+    this.lastName = this.profilePage.get('lastName');
+    this.email = this.profilePage.get('email');
+    this.password = this.profilePage.get('password');
+    this.passwordRepeated = this.profilePage.get('passwordRepeated');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.lecturerSub = this.LecturerAuthService.lecturer.subscribe(
+      (lecturer) => {
+        this.activeLecturer = !lecturer ? null : lecturer;
+        if (this.activeLecturer) {
+          this.profilePage.controls['firstName'].setValue(
+            this.activeLecturer.firstName
+          );
+          this.profilePage.controls['lastName'].setValue(
+            this.activeLecturer.lastName
+          );
+          this.profilePage.controls['email'].setValue(
+            this.activeLecturer.email
+          );
+        }
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.lecturerSub.unsubscribe();
+  }
 
   invalidFirstNameMessage() {
     if (this.firstName.errors?.required) {
-      return 'You must enter a first name';
+      return 'You must enter your first name';
     }
     if (this.firstName.errors?.firstNameLettersError) {
-      return 'You must enter letters only';
+      return 'Your first name must contain letters only';
     }
   }
-
   invalidLastNameMessage() {
     if (this.lastName.errors?.required) {
-      return 'You must enter a last name';
+      return 'You must enter your last name';
     }
     if (this.lastName.errors?.lastNameLettersError) {
-      return 'You must enter letters only';
+      return 'Your last name must contain letters only';
     }
   }
 
@@ -80,9 +106,6 @@ export class SignUpComponent implements OnInit {
   }
 
   invalidPassword() {
-    if (this.password.errors?.required) {
-      return 'You must enter a password';
-    }
     if (this.password.errors?.passwordinvalid) {
       return 'A password must contain digits and no spaces';
     }
@@ -93,8 +116,8 @@ export class SignUpComponent implements OnInit {
       return 'You must repeat on the password';
     }
 
-    if (this.signUpForm.errors?.passwordnotrepeated) {
-      return 'Two passwords must ne identical.';
+    if (this.profilePage.errors?.passwordnotrepeated) {
+      return 'Two passwords must be identical.';
     }
   }
 
@@ -105,6 +128,9 @@ export class SignUpComponent implements OnInit {
   }
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
+    if (control.value.length === 0) {
+      return null;
+    }
     const isIncludesWhiteSpace = control.value.includes(' ');
     const isIncludesDigits = /\d/.exec(control.value);
     const invalid = !isIncludesDigits || isIncludesWhiteSpace;
@@ -127,21 +153,7 @@ export class SignUpComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  onSubmitSignUpForm() {
-    this.AuthService.signUp(
-      this.firstName.value,
-      this.lastName.value,
-      this.email.value,
-      this.password.value
-    ).subscribe(
-      () => {
-        this.submitMessage = 'The student has been registered';
-        this.isModalOpen = true;
-      },
-      (errorMessage) => {
-        this.submitMessage = errorMessage;
-        this.isModalOpen = true;
-      }
-    );
-  }
+  onClickLogOut() {}
+
+  onSubmitProfileEditForm() {}
 }

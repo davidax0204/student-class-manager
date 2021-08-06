@@ -6,21 +6,12 @@ const router = new express.Router();
 
 router.post("/student-sign-in", async (req, res) => {
   try {
-    if (req.body.isLecturer) {
-      const student = await Lecturer.findByCredentials(
-        req.body.email,
-        req.body.password
-      );
-      const token = await student.generateAuthToken();
-      res.status(200).send({ student, token });
-    } else {
-      const student = await Student.findByCredentials(
-        req.body.email,
-        req.body.password
-      );
-      const token = await student.generateAuthToken();
-      res.status(200).send({ student, token });
-    }
+    const student = await Student.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    const token = await student.generateAuthToken();
+    res.status(200).send({ student, token });
   } catch (e) {
     console.log(e.message);
     res.status(404).send(e.message);
