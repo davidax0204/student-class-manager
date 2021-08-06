@@ -4,14 +4,8 @@ import { environment } from 'src/environments/environment.prod';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from 'src/models/student.model';
+import { Router } from '@angular/router';
 const mongooseDB = environment.NODEJS_SERVER;
-
-interface AuthResponseStudent {
-  firstName: string;
-  lastName: string;
-  email: string;
-  _id: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +13,8 @@ interface AuthResponseStudent {
 export class AuthService {
   student = new BehaviorSubject<User>(null);
   lecturer = new BehaviorSubject<User>(null);
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   signUp(firstName: string, lastName: string, email: string, password: string) {
     return this.http
@@ -57,8 +52,8 @@ export class AuthService {
   signOut() {
     this.student.next(null);
     this.lecturer.next(null);
-    localStorage.removeItem('userData');
-    localStorage.removeItem('lecturerData');
+    localStorage.clear();
+    this.router.navigate(['/sign-in']);
   }
 
   private handleAuthentication(
@@ -82,8 +77,6 @@ export class AuthService {
 
   private handleError(errorResponse: HttpErrorResponse) {
     let errorMessage = 'An Unknown error occurred!';
-
-    console.log(errorResponse);
 
     if (!errorResponse.error) {
       return throwError(errorMessage);

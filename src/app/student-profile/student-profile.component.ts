@@ -1,13 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from 'src/models/student.model';
+import { AuthService } from 'src/services/auth.service';
 
 @Component({
   selector: 'app-student-profile',
   templateUrl: './student-profile.component.html',
-  styleUrls: ['./student-profile.component.css']
+  styleUrls: ['./student-profile.component.css'],
 })
-export class StudentProfileComponent implements OnInit {
+export class StudentProfileComponent implements OnInit, OnDestroy {
+  activeStudent: User;
+  activeLecturer: User;
+  studentSub: Subscription;
+  lecturerSub: Subscription;
 
   profilePage: FormGroup;
   firstName;
@@ -21,7 +34,8 @@ export class StudentProfileComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private AuthService: AuthService
   ) {
     this.profilePage = this.formBuilder.group(
       {
@@ -44,17 +58,35 @@ export class StudentProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.UserService.getUser().subscribe(
-    //   (res: any) => {
-    //     this.profilePage.controls['firstName'].setValue(res.firstName);
-    //     this.profilePage.controls['lastName'].setValue(res.lastName);
-    //     this.profilePage.controls['age'].setValue(res.age);
-    //     this.profilePage.controls['email'].setValue(res.email);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
+    this.studentSub = this.AuthService.student.subscribe((student) => {
+      this.activeStudent = !student ? null : student;
+      if (this.activeStudent) {
+        this.profilePage.controls['firstName'].setValue(
+          this.activeStudent.firstName
+        );
+        this.profilePage.controls['lastName'].setValue(
+          this.activeStudent.lastName
+        );
+        this.profilePage.controls['email'].setValue(this.activeStudent.email);
+      }
+    });
+    this.lecturerSub = this.AuthService.lecturer.subscribe((lecturer) => {
+      this.activeLecturer = !lecturer ? null : lecturer;
+      if (this.activeLecturer) {
+        this.profilePage.controls['firstName'].setValue(
+          this.activeLecturer.firstName
+        );
+        this.profilePage.controls['lastName'].setValue(
+          this.activeLecturer.lastName
+        );
+        this.profilePage.controls['email'].setValue(this.activeLecturer.email);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.studentSub.unsubscribe();
+    this.lecturerSub.unsubscribe();
   }
 
   invalidFirstNameMessage() {
@@ -73,7 +105,6 @@ export class StudentProfileComponent implements OnInit {
       return 'Your last name must contain letters only';
     }
   }
-
 
   invalidEmailMessage() {
     if (this.email.errors?.required) {
@@ -132,12 +163,7 @@ export class StudentProfileComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  onClickLogOut() {
+  onClickLogOut() {}
 
-  }
-
-  onSubmitProfileEditForm() {
-
-  }
-
+  onSubmitProfileEditForm() {}
 }

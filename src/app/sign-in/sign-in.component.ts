@@ -62,7 +62,9 @@ export class SignInComponent implements OnInit {
       this.password.value,
       this.isLecturer
     ).subscribe(
-      () => {},
+      () => {
+        this.router.navigate(['/profile']);
+      },
       (errorMessage) => {
         this.signInErrorMessage = errorMessage;
         this.isModalOpen = true;
