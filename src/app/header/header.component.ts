@@ -21,13 +21,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.studentSub = this.StudentAuthService.student.subscribe((student) => {
-      this.isAuthenticatedStudent = !student ? false : true;
-    });
-    this.lecturerSub = this.LecturerAuthService.lecturer.subscribe(
-      (lecutrer) => {
-        this.isAuthenticatedLecturer = !lecutrer ? false : true;
-        this.isAuthenticatedStudent = false;
+    this.studentSub = this.StudentAuthService.studentHeader.subscribe(
+      (logedIn) => {
+        this.isAuthenticatedStudent = logedIn;
+      }
+    );
+
+    this.lecturerSub = this.LecturerAuthService.lecturerHeader.subscribe(
+      (logedIn) => {
+        this.isAuthenticatedLecturer = logedIn;
       }
     );
   }

@@ -12,6 +12,7 @@ const mongooseDB = environment.NODEJS_SERVER;
 })
 export class LecturerAuthService {
   lecturer = new BehaviorSubject<Lecturer>(null);
+  lecturerHeader = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -52,6 +53,7 @@ export class LecturerAuthService {
   signOut() {
     this.http.get(`${mongooseDB}/lecturer-log-out`).subscribe();
     this.lecturer.next(null);
+    this.lecturerHeader.next(false);
     localStorage.clear();
     this.router.navigate(['/sign-in']);
   }
@@ -75,6 +77,7 @@ export class LecturerAuthService {
 
     if (loadedLecturer._token) {
       this.lecturer.next(loadedLecturer);
+      this.lecturerHeader.next(true);
     }
   }
 
@@ -87,6 +90,7 @@ export class LecturerAuthService {
   ) {
     const lecturer = new Lecturer(firstName, lastName, email, userId, token);
     this.lecturer.next(lecturer);
+    this.lecturerHeader.next(true);
     localStorage.setItem('lecturerData', JSON.stringify(lecturer));
   }
 

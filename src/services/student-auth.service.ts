@@ -12,6 +12,7 @@ const mongooseDB = environment.NODEJS_SERVER;
 })
 export class StudentAuthService {
   student = new BehaviorSubject<Student>(null);
+  studentHeader = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -57,12 +58,14 @@ export class StudentAuthService {
 
     if (loadedStudent._token) {
       this.student.next(loadedStudent);
+      this.studentHeader.next(true);
     }
   }
 
   signOut() {
     this.http.get(`${mongooseDB}/student-log-out`).subscribe();
     this.student.next(null);
+    this.studentHeader.next(false);
     localStorage.clear();
     this.router.navigate(['/sign-in']);
   }
@@ -75,8 +78,8 @@ export class StudentAuthService {
     token: string
   ) {
     const student = new Student(firstName, lastName, email, userId, token);
-    console.log(student);
     this.student.next(student);
+    this.studentHeader.next(true);
     localStorage.setItem('studentData', JSON.stringify(student));
   }
 
