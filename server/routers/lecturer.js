@@ -53,4 +53,22 @@ router.get("/lecturer-log-out", lecturerAuth, async (req, res) => {
   }
 });
 
+router.get("/students", lecturerAuth, async (req, res) => {
+  try {
+    const students = await Student.find({});
+    res.status(200).send(students);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+router.get("/students/:id", lecturerAuth, async (req, res) => {
+  try {
+    const student = await Student.findOne({ _id: req.params.id });
+    res.status(200).send(student);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
 module.exports = router;

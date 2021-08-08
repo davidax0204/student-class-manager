@@ -14,6 +14,8 @@ import { LecturerProfileComponent } from './lecturer-profile/lecturer-profile.co
 import { AuthInterceptor } from 'src/interceptors/auth.interceptor';
 import { StudentAuthGuard } from '../auth-guards/student-auth.guard';
 import { LecturerAuthGuard } from 'src/auth-guards/lecturer-auth.guard';
+import { StudentsComponent } from './students/students.component';
+import { StudentEditPageComponent } from './student-edit-page/student-edit-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { LecturerAuthGuard } from 'src/auth-guards/lecturer-auth.guard';
     SignUpComponent,
     StudentProfileComponent,
     LecturerProfileComponent,
+    StudentsComponent,
+    StudentEditPageComponent,
   ],
   imports: [
     AppRoutingModule,

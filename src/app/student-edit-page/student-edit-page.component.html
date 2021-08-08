@@ -1,0 +1,82 @@
+<div class="main-content-inner-part">
+  <form id="sign-up-form"
+        [formGroup]="profilePage"
+        (ngSubmit)="onSubmitProfileEditForm()">
+
+    <div class="container">
+      <h1>Edit Student Details</h1>
+
+      <div class="sign-up-line-wrap">
+        <label><b>First name</b></label>
+        <input type="text"
+               placeholder="Enter first name"
+               formControlName="firstName">
+      </div>
+      <div class="invalid-message"
+           *ngIf="firstName.invalid">{{invalidFirstNameMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Last name</b></label>
+        <input type="text"
+               placeholder="Enter last name"
+               formControlName="lastName">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="lastName.invalid">{{invalidLastNameMessage()}}</div>
+
+
+      <div class="sign-up-line-wrap">
+        <label><b>Email</b></label>
+        <input type="text"
+               placeholder="Enter email"
+               formControlName="email">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="email.invalid">{{invalidEmailMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label for="password"><b>Password</b></label>
+        <input type="password"
+               placeholder="Enter password"
+               formControlName="password">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="password.invalid">{{invalidPassword()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Reapet on Password</b></label>
+        <input type="password"
+               placeholder="Reapet on password"
+               formControlName="passwordRepeated">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="(passwordRepeated.invalid || profilePage.errors?.passwordnotrepeated)">
+        {{invalidPsswordRepeatedMessage()}}
+      </div>
+
+      <hr>
+
+
+      <button type="submit"
+              class="registerbtn"
+              [disabled]="profilePage.invalid">Save</button>
+
+    </div>
+
+
+  </form>
+
+</div>
+<div id="myModal"
+     *ngIf="isModalOpen"
+     class="modal">
+  <div class="modal-content">
+    <span (click)="onClickCloseModal()"
+          class="close">&times;</span>
+    <p>{{msg}}.</p>
+  </div>
+</div>
