@@ -1,14 +1,3 @@
-/* .nav-container
-{
-    top: 0;
-    left: 0;
-    right: 0;
-    color: #fff;
-    background: #ffffff;
-    position: fixed;
-    z-index: 10;
-    box-shadow: rgba(44, 51, 73, 0.1) 0px 8px 16px 0px;
-} */
 .navigation-bar {
   margin-right: auto;
   margin-left: auto;
@@ -44,9 +33,9 @@
   background-color: #f1f1f1;
   padding-left: 10px;
   font-size: 15px;
-  width: 80%;
+  width: 70%;
   flex-direction: row;
-  height: 35px;
+  height: 37\px;
   border: none;
 }
 
@@ -66,13 +55,11 @@ form.search-container button {
   border: none;
 }
 form.search-container button:hover,
-.header-user-button button:hover {
+.header-user-button button:hover,
+.header-user-button-admin button:hover {
   background: #0b7dda;
 }
-/* .header-user-button-inner i
-  {
-    margin-left:5px;
-  } */
+
 .header-user-button {
   width: 15%;
   background: #ffffff;
@@ -126,6 +113,9 @@ form.search-container button:hover,
   .header-user-button {
     display: none;
   }
+  .header-user-button-admin {
+    display: none !important;
+  }
   .mobile-menu {
     display: unset;
   }
@@ -136,8 +126,8 @@ form.search-container button:hover,
 
 .mobile-menu {
   position: absolute;
-  left: 10px;
-  top: 20px;
+  left: 0px;
+  top: 5px;
 }
 
 .main-menu {
@@ -188,7 +178,7 @@ form.search-container button:hover,
   text-decoration: none;
   font-size: 17px;
   display: block;
-  background-color: #2196f3;
+  /* background-color: #2196f3; */
 }
 .mobile-menu a:hover {
   background-color: #0b7dda;
@@ -227,4 +217,61 @@ form.search-container button:hover,
 
 .noHover {
   pointer-events: none;
+}
+
+.dropbtn {
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.icon {
+  padding-right: 5px;
+}
+.icon-admin {
+  padding-left: 5px;
+}
+.logo-container-admin {
+  background: #ffffff;
+  padding: 0.5rem;
+}
+.header-user-button-admin {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-user-button-admin button {
+  border: none;
 }
