@@ -241,10 +241,13 @@
         <div>
 
           <a routerLink="/lecturer-profile"><i class="icon user-button fa fa-user"></i> Profile </a>
-          <a (click)="onLecturerSignOut()"
-             style="cursor: pointer;"><i class="icon fas fa-sign-out-alt"></i> Logout </a>
+
           <a routerLink="/students"
              style="cursor: pointer;"> <i class="icon fas fa-user-graduate"></i> Students </a>
+          <a routerLink="/student-registration"
+             style="cursor: pointer;"> <i class="icon fas fa-plus"></i> Student Registration </a>
+          <a (click)="onLecturerSignOut()"
+             style="cursor: pointer;"><i class="icon fas fa-sign-out-alt"></i> Logout </a>
         </div>
       </div>
 
@@ -279,6 +282,10 @@
     <button routerLink="/students"
             class="header-user-button-inner-admin user-button">Students <i id="user"
          class="icon-admin user-button fas fa-book-reader fa-lg"></i> </button>
+
+    <button routerLink="/student-registration"
+            class="header-user-button-inner-admin user-button">Student Registration <i id="user"
+         class="icon-admin user-button fas fa-plus fa-lg"></i> </button>
 
 
   </div>

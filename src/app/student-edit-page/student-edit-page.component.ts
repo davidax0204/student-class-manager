@@ -155,36 +155,42 @@ export class StudentEditPageComponent implements OnInit {
 
   onSubmitProfileEditForm() {
     if (!this.password.value) {
-      this.StudentService.editProfile(
-        this.firstName.value,
-        this.lastName.value,
-        this.email.value
-      ).subscribe(
-        () => {
-          this.isModalOpen = true;
-          this.msg = 'Your changes are successfully saved';
-        },
-        (errorMessage) => {
-          this.isModalOpen = true;
-          this.msg = errorMessage;
-        }
-      );
+      this.lecturerService
+        .editStudentProfile(
+          this.firstName.value,
+          this.lastName.value,
+          this.email.value,
+          this.activeStudent._id
+        )
+        .subscribe(
+          () => {
+            this.isModalOpen = true;
+            this.msg = 'Your changes are successfully saved';
+          },
+          (errorMessage) => {
+            this.isModalOpen = true;
+            this.msg = errorMessage;
+          }
+        );
     } else {
-      this.StudentService.editProfile(
-        this.firstName.value,
-        this.lastName.value,
-        this.email.value,
-        this.password.value
-      ).subscribe(
-        () => {
-          this.isModalOpen = true;
-          this.msg = 'Your changes are successfully saved';
-        },
-        (errorMessage) => {
-          this.isModalOpen = true;
-          this.msg = errorMessage;
-        }
-      );
+      this.lecturerService
+        .editStudentProfile(
+          this.firstName.value,
+          this.lastName.value,
+          this.email.value,
+          this.activeStudent._id,
+          this.password.value
+        )
+        .subscribe(
+          () => {
+            this.isModalOpen = true;
+            this.msg = 'Your changes are successfully saved';
+          },
+          (errorMessage) => {
+            this.isModalOpen = true;
+            this.msg = errorMessage;
+          }
+        );
     }
   }
 }

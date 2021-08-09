@@ -71,4 +71,26 @@ router.get("/students/:id", lecturerAuth, async (req, res) => {
   }
 });
 
+router.post("/students/:id/edit", lecturerAuth, async (req, res) => {
+  const updates = Object.keys(req.body);
+  try {
+    const student = await Student.findOne({ _id: req.params.id });
+    updates.forEach((update) => (student[update] = req.body[update]));
+    await student.save();
+    res.status(200).send(student);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+router.get("/students/:id/delete", lecturerAuth, async (req, res) => {
+  try {
+    const student = await Student.findOneAndDelete({ _id: req.params.id });
+    const students = await Student.find({});
+    res.status(200).send(students);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
 module.exports = router;

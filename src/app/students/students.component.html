@@ -30,8 +30,8 @@
         <div class="user-card-buttons-actions">
           <button (click)="onEditStudent(student._id)"
                   routerLink="/student/{{student._id}}">Edit student details</button>
-          <button type="submit"
-                  class="registerbtn">Delete User</button>
+          <button (click)="deleteStudent(student._id)"
+                  class="registerbtn">Delete Student</button>
         </div>
       </div>
     </div>

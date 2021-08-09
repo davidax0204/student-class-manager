@@ -11,7 +11,7 @@ import { StudentEditPageComponent } from './student-edit-page/student-edit-page.
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
-  { path: 'sign-up', component: SignUpComponent },
+  { path: 'student-registration', component: SignUpComponent },
   { path: 'students', component: StudentsComponent },
   { path: 'student/:id', component: StudentEditPageComponent },
   {

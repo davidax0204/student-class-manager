@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, pipe, VirtualTimeScheduler } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { Lecturer } from 'src/models/lecturer.model';
@@ -71,5 +71,38 @@ export class LecturerService {
 
   autoGetStudent() {
     this.getStudent(localStorage.getItem('editedStudentId'));
+  }
+
+  editStudentProfile(
+    firstName: string,
+    lastName: string,
+    email: string,
+    studentId: string,
+    password?: string
+  ) {
+    return this.http
+      .post<Student>(`${mongooseDB}/students/${studentId}/edit`, {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .pipe(
+        catchError(this.LecturerAuthService.handleError),
+        map((updatedStudent) => {
+          this.selectedStudent.next(updatedStudent);
+        })
+      );
+  }
+
+  deleteStudent(studentId: string) {
+    this.http
+      .get<Student[]>(`${mongooseDB}/students/${studentId}/delete`)
+      .pipe(
+        map((students) => {
+          this.students.next(students);
+        })
+      )
+      .subscribe();
   }
 }

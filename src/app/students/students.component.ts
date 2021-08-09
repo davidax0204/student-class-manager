@@ -30,4 +30,8 @@ export class StudentsComponent implements OnInit, OnDestroy {
   onEditStudent(studentId: string) {
     this.LecturerService.getStudent(studentId);
   }
+
+  deleteStudent(studentId) {
+    this.LecturerService.deleteStudent(studentId);
+  }
 }
