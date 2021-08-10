@@ -12,6 +12,7 @@ import { CourseRegisterComponent } from './course-register/course-register.compo
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
+
   { path: 'student-registration', component: SignUpComponent },
   { path: 'course-registration', component: CourseRegisterComponent },
   { path: 'students', component: StudentsComponent },

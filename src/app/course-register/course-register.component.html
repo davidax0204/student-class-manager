@@ -13,7 +13,7 @@
       <div class="sign-up-line-wrap">
         <label><b>Course name</b></label>
         <input type="text"
-               placeholder="Enter first name"
+               placeholder="Enter course name"
                formControlName="courseName">
       </div>
 
@@ -41,6 +41,26 @@
       <div class="invalid-message"
            *ngIf="courseEndDate.touched && courseEndDate.invalid">{{invalidCourseEndDateMessage()}}</div>
 
+
+
+      <div class="sign-up-line-wrap">
+        <label><b>Course start time</b></label>
+        <input type="time"
+               formControlName="courseEndDate">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="courseEndDate.touched && courseEndDate.invalid">{{invalidCourseEndDateMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Course end time</b></label>
+        <input type="time"
+               formControlName="courseEndDate">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="courseEndDate.touched && courseEndDate.invalid">{{invalidCourseEndDateMessage()}}</div>
+
       <div class="sign-up-line-wrap-gender">
         <label><b>Course days:</b></label>
         <div *ngFor="let day of daysData; let i=index">
@@ -52,7 +72,6 @@
           </label>
         </div>
       </div>
-
 
       <hr>
 
