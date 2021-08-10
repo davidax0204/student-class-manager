@@ -33,13 +33,9 @@
   align-items: center;
   justify-content: center;
 }
-/* .user-card
-{
-    width: 100%;
-    height: 200px;
-    padding: 20px;
-    background-color: violet;
-} */
+.user-card-buttons-actions button:hover {
+  background-color: #0b7dda;
+}
 .user-card-wrap {
   width: 283.333px;
   box-shadow: rgba(44, 51, 73, 0.1) 0px 8px 16px 0px;
@@ -49,10 +45,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* justify-content: center;
-    align-items: center;
-    align-self: center;
-    align-content: center; */
   position: relative;
 }
 .user-card-profile-level {

@@ -264,6 +264,7 @@ form.search-container button:hover,
 .logo-container-admin {
   background: #ffffff;
   padding: 0.5rem;
+  width: 15%;
 }
 .header-user-button-admin {
   background: #ffffff;

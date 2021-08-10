@@ -18,6 +18,7 @@ input[type="time"] {
 .sign-up-line-wrap-gender {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   padding-bottom: 10px;
 }
 .sign-up-line-wrap-gender label {
