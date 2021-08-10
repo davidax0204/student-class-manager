@@ -26,6 +26,8 @@ export class LecturerProfileComponent implements OnInit {
   firstName;
   lastName;
   email;
+  phoneNumber;
+  gender;
   password;
   passwordRepeated;
 
@@ -42,6 +44,15 @@ export class LecturerProfileComponent implements OnInit {
         firstName: ['', [Validators.required, this.firstNameValidator]],
         lastName: ['', [Validators.required, this.lastNameValidator]],
         email: ['', [Validators.required, Validators.email]],
+        phoneNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('[- +()0-9]+'),
+            this.phoneNumberValidator,
+          ],
+        ],
+        gender: ['male', Validators.required],
         password: ['', this.passwordValidator],
         passwordRepeated: [''],
       },
@@ -53,6 +64,8 @@ export class LecturerProfileComponent implements OnInit {
     this.firstName = this.profilePage.get('firstName');
     this.lastName = this.profilePage.get('lastName');
     this.email = this.profilePage.get('email');
+    this.phoneNumber = this.profilePage.get('phoneNumber');
+    this.gender = this.profilePage.get('gender');
     this.password = this.profilePage.get('password');
     this.passwordRepeated = this.profilePage.get('passwordRepeated');
   }
@@ -70,6 +83,12 @@ export class LecturerProfileComponent implements OnInit {
           );
           this.profilePage.controls['email'].setValue(
             this.activeLecturer.email
+          );
+          this.profilePage.controls['phoneNumber'].setValue(
+            this.activeLecturer.phoneNumber
+          );
+          this.profilePage.controls['gender'].setValue(
+            this.activeLecturer.gender
           );
         }
       }
@@ -103,6 +122,24 @@ export class LecturerProfileComponent implements OnInit {
     }
     if (this.email.errors?.email) {
       return 'You must enter a valid Email';
+    }
+  }
+
+  invalidPhoneNumberMessage() {
+    if (this.phoneNumber.errors?.required) {
+      return 'You must enter an phone number';
+    }
+    if (this.phoneNumber.errors?.pattern) {
+      return 'You must enter a valid phone number';
+    }
+    if (this.phoneNumber.errors?.phoneNumberLengthError) {
+      return 'You phone number missing digits';
+    }
+  }
+
+  invalidGenderMessage() {
+    if (this.gender.errors?.required) {
+      return 'You must choose a gender';
     }
   }
 
@@ -150,6 +187,10 @@ export class LecturerProfileComponent implements OnInit {
       : null;
   }
 
+  phoneNumberValidator(control: AbstractControl): ValidationErrors | null {
+    return control.value.length < 10 ? { phoneNumberLengthError: true } : null;
+  }
+
   onClickCloseModal() {
     this.isModalOpen = false;
   }
@@ -160,7 +201,9 @@ export class LecturerProfileComponent implements OnInit {
     if (!this.password.value) {
       this.LecturerService.editProfile(
         this.firstName.value,
-        this.lastName.value
+        this.lastName.value,
+        this.phoneNumber.value,
+        this.gender.value
       ).subscribe(
         () => {
           this.isModalOpen = true;
@@ -175,6 +218,8 @@ export class LecturerProfileComponent implements OnInit {
       this.LecturerService.editProfile(
         this.firstName.value,
         this.lastName.value,
+        this.phoneNumber.value,
+        this.gender.value,
         this.password.value
       ).subscribe(
         () => {

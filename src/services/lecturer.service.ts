@@ -22,13 +22,21 @@ export class LecturerService {
     private router: Router
   ) {}
 
-  editProfile(firstName: string, lastName: string, password?: string) {
+  editProfile(
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    gender: string,
+    password?: string
+  ) {
     return this.http
       .post<{ lecturer: Lecturer; token: string }>(
         `${mongooseDB}/lecturer-profile/edit`,
         {
           firstName,
           lastName,
+          phoneNumber,
+          gender,
           password,
         }
       )
@@ -39,6 +47,8 @@ export class LecturerService {
             resData.lecturer.firstName,
             resData.lecturer.lastName,
             resData.lecturer.email,
+            resData.lecturer.phoneNumber,
+            resData.lecturer.gender,
             resData.lecturer._id,
             resData.token
           );
@@ -80,6 +90,8 @@ export class LecturerService {
     firstName: string,
     lastName: string,
     email: string,
+    phoneNumber: string,
+    gender: string,
     studentId: string,
     password?: string
   ) {
@@ -88,6 +100,8 @@ export class LecturerService {
         firstName,
         lastName,
         email,
+        phoneNumber,
+        gender,
         password,
       })
       .pipe(

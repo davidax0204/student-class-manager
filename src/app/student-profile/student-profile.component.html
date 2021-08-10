@@ -33,6 +33,16 @@
                formControlName="email">
       </div>
 
+      <div class="sign-up-line-wrap">
+        <label><b>Phone Number</b></label>
+        <input type="text"
+               placeholder="Enter phone number"
+               formControlName="phoneNumber">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="phoneNumber.touched && phoneNumber.invalid">{{invalidPhoneNumberMessage()}}</div>
+
       <div class="invalid-message"
            *ngIf="email.invalid">{{invalidEmailMessage()}}</div>
 
@@ -57,6 +67,25 @@
            *ngIf="(passwordRepeated.invalid || profilePage.errors?.passwordnotrepeated)">
         {{invalidPsswordRepeatedMessage()}}
       </div>
+
+      <div class="sign-up-line-wrap-gender">
+        <label><b>Gender: </b></label>
+        <input id="male"
+               type="radio"
+               class="custom-control-input"
+               value="male"
+               name="gender"
+               formControlName="gender"> Male
+        <input id="female"
+               type="radio"
+               class="custom-control-input"
+               value="female"
+               name="gender"
+               formControlName="gender"> Female
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="gender.touched && gender.invalid">{{invalidGenderMessage()}}</div>
 
       <hr>
 

@@ -22,6 +22,8 @@ export class StudentService {
     firstName: string,
     lastName: string,
     email: string,
+    phoneNumber: string,
+    gender: string,
     password?: string
   ) {
     return this.http
@@ -31,6 +33,8 @@ export class StudentService {
           firstName,
           lastName,
           email,
+          phoneNumber,
+          gender,
           password,
         }
       )
@@ -41,6 +45,8 @@ export class StudentService {
             resData.student.firstName,
             resData.student.lastName,
             resData.student.email,
+            resData.student.phoneNumber,
+            resData.student.gender,
             resData.student._id,
             resData.token
           );

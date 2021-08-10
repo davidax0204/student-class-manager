@@ -16,12 +16,21 @@ export class LecturerAuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  signUp(firstName: string, lastName: string, email: string, password: string) {
+  signUp(
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    gender: string,
+    password: string
+  ) {
     return this.http
       .post(`${mongooseDB}/create-user`, {
         firstName,
         lastName,
         email,
+        phoneNumber,
+        gender,
         password,
       })
       .pipe(catchError(this.handleError));
@@ -43,6 +52,8 @@ export class LecturerAuthService {
             resData.lecturer.firstName,
             resData.lecturer.lastName,
             resData.lecturer.email,
+            resData.lecturer.phoneNumber,
+            resData.lecturer.gender,
             resData.lecturer._id,
             resData.token
           );
@@ -71,6 +82,8 @@ export class LecturerAuthService {
       lecturerData.firstName,
       lecturerData.lastName,
       lecturerData.email,
+      lecturerData.phoneNumber,
+      lecturerData.gender,
       lecturerData._id,
       lecturerData._token
     );
@@ -85,10 +98,20 @@ export class LecturerAuthService {
     firstName: string,
     lastName: string,
     email: string,
+    phoneNumber: string,
+    gender: string,
     userId: string,
     token: string
   ) {
-    const lecturer = new Lecturer(firstName, lastName, email, userId, token);
+    const lecturer = new Lecturer(
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      gender,
+      userId,
+      token
+    );
     this.lecturer.next(lecturer);
     this.lecturerHeader.next(true);
     localStorage.setItem('lecturerData', JSON.stringify(lecturer));

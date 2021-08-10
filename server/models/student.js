@@ -53,6 +53,18 @@ const studentSchema = new mongoose.Schema({
       }
     },
   },
+  phoneNumber: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
   password: {
     type: String,
     required: true,

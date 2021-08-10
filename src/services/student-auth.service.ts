@@ -32,6 +32,8 @@ export class StudentAuthService {
             resData.student.firstName,
             resData.student.lastName,
             resData.student.email,
+            resData.student.phoneNumber,
+            resData.student.gender,
             resData.student._id,
             resData.token
           );
@@ -52,6 +54,8 @@ export class StudentAuthService {
       StudentData.firstName,
       StudentData.lastName,
       StudentData.email,
+      StudentData.phoneNumber,
+      StudentData.gender,
       StudentData._id,
       StudentData._token
     );
@@ -74,10 +78,20 @@ export class StudentAuthService {
     firstName: string,
     lastName: string,
     email: string,
+    phoneNumber: string,
+    gender: string,
     userId: string,
     token: string
   ) {
-    const student = new Student(firstName, lastName, email, userId, token);
+    const student = new Student(
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      gender,
+      userId,
+      token
+    );
     this.student.next(student);
     this.studentHeader.next(true);
     localStorage.setItem('studentData', JSON.stringify(student));

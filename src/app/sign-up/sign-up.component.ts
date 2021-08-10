@@ -167,6 +167,8 @@ export class SignUpComponent implements OnInit {
       this.firstName.value,
       this.lastName.value,
       this.email.value,
+      this.phoneNumber.value,
+      this.gender.value,
       this.password.value
     ).subscribe(
       () => {
