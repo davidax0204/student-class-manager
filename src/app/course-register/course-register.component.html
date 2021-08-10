@@ -1,0 +1,77 @@
+<div class="main-content-inner-part">
+  <form id="sign-up-form"
+        [formGroup]="courseForm"
+        (ngSubmit)="onSubmitProfileEditForm()">
+
+    <div class="container">
+      <h1>Course Profile Page</h1>
+
+      <p>Please fill this form to register a course.</p>
+
+      <hr>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Course name</b></label>
+        <input type="text"
+               placeholder="Enter first name"
+               formControlName="courseName">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="courseName.touched && courseName.invalid">{{invalidCourseNameMessage()}}</div>
+
+
+      <div class="sign-up-line-wrap">
+        <label><b>Course start date</b></label>
+        <input type="date"
+               placeholder="Enter last name"
+               formControlName="courseStartDate">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="courseStartDate.touched && courseStartDate.invalid">{{invalidCourseStartDateMessage()}}</div>
+
+      <div class="sign-up-line-wrap">
+        <label><b>Course end date</b></label>
+        <input type="date"
+               placeholder="Enter last name"
+               formControlName="courseEndDate">
+      </div>
+
+      <div class="invalid-message"
+           *ngIf="courseEndDate.touched && courseEndDate.invalid">{{invalidCourseEndDateMessage()}}</div>
+
+      <div class="sign-up-line-wrap-gender">
+        <label><b>Course days:</b></label>
+        <div *ngFor="let day of daysData; let i=index">
+          <label>
+            <input type="checkbox"
+                   [value]="day.value"
+                   (change)="onCheckboxChange($event)" />
+            {{day.name}}
+          </label>
+        </div>
+      </div>
+
+
+      <hr>
+
+      <button type="submit"
+              class="registerbtn"
+              [disabled]="courseForm.invalid">Save</button>
+
+    </div>
+
+
+  </form>
+
+</div>
+<div id="myModal"
+     *ngIf="isModalOpen"
+     class="modal">
+  <div class="modal-content">
+    <span (click)="onClickCloseModal()"
+          class="close">&times;</span>
+    <p>{{msg}}.</p>
+  </div>
+</div>

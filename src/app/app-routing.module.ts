@@ -8,10 +8,12 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 import { LecturerAuthGuard } from 'src/auth-guards/lecturer-auth.guard';
 import { StudentsComponent } from './students/students.component';
 import { StudentEditPageComponent } from './student-edit-page/student-edit-page.component';
+import { CourseRegisterComponent } from './course-register/course-register.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'student-registration', component: SignUpComponent },
+  { path: 'course-registration', component: CourseRegisterComponent },
   { path: 'students', component: StudentsComponent },
   { path: 'student/:id', component: StudentEditPageComponent },
   {
