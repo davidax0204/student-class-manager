@@ -84,8 +84,6 @@ export class StudentAuthService {
   }
 
   public handleError(errorResponse: HttpErrorResponse) {
-    console.log('here');
-
     let errorMessage = 'An Unknown error occurred!';
 
     if (!errorResponse.error) {
@@ -105,7 +103,6 @@ export class StudentAuthService {
         errorMessage = 'The Email is invalid';
         break;
     }
-    console.log(errorMessage);
 
     return throwError(errorMessage);
   }

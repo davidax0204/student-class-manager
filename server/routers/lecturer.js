@@ -17,7 +17,6 @@ router.post("/create-user", async (req, res) => {
 
 router.post("/lecturer-sign-in", async (req, res) => {
   try {
-    console.log(req.query);
     const lecturer = await Lecturer.findByCredentials(
       req.body.email,
       req.body.password

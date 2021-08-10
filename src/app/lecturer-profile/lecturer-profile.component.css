@@ -1,6 +1,6 @@
 .container {
   padding: 15px;
-  min-width: 500px;
+  /* min-width: 500px; */
 }
 /* Full-width input fields */
 .main-content-inner-part input[type="text"],
@@ -75,7 +75,7 @@ h1 {
 
 @media (max-width: 500px) {
   .container {
-    padding: 20px 50px;
+    padding: 15px 50px;
   }
   .signin {
     margin-top: 20px;

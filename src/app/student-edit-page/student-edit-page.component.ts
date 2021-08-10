@@ -77,6 +77,7 @@ export class StudentEditPageComponent implements OnInit {
 
   ngOnDestroy() {
     this.studentSub.unsubscribe();
+    localStorage.removeItem('editedStudentId');
   }
 
   invalidFirstNameMessage() {

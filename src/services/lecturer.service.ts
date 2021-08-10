@@ -70,7 +70,10 @@ export class LecturerService {
   }
 
   autoGetStudent() {
-    this.getStudent(localStorage.getItem('editedStudentId'));
+    const editedStudentId = localStorage.getItem('editedStudentId');
+    if (editedStudentId) {
+      this.getStudent(localStorage.getItem('editedStudentId'));
+    }
   }
 
   editStudentProfile(
