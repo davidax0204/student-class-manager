@@ -17,6 +17,9 @@ import { LecturerAuthGuard } from 'src/auth-guards/lecturer-auth.guard';
 import { StudentsComponent } from './students/students.component';
 import { StudentEditPageComponent } from './student-edit-page/student-edit-page.component';
 import { CourseRegisterComponent } from './course-register/course-register.component';
+import { LecturerComponent } from './lecturer/lecturer.component';
+import { StudentComponent } from './student/student.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { CourseRegisterComponent } from './course-register/course-register.compo
     StudentsComponent,
     StudentEditPageComponent,
     CourseRegisterComponent,
+    LecturerComponent,
+    StudentComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     AppRoutingModule,

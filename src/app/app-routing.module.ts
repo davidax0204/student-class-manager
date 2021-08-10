@@ -9,25 +9,52 @@ import { LecturerAuthGuard } from 'src/auth-guards/lecturer-auth.guard';
 import { StudentsComponent } from './students/students.component';
 import { StudentEditPageComponent } from './student-edit-page/student-edit-page.component';
 import { CourseRegisterComponent } from './course-register/course-register.component';
+import { LecturerComponent } from './lecturer/lecturer.component';
+import { StudentComponent } from './student/student.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
-
-  { path: 'student-registration', component: SignUpComponent },
-  { path: 'course-registration', component: CourseRegisterComponent },
-  { path: 'students', component: StudentsComponent },
-  { path: 'student/:id', component: StudentEditPageComponent },
   {
-    path: 'student-profile',
-    component: StudentProfileComponent,
+    path: 'student',
+    component: StudentComponent,
     canActivate: [StudentAuthGuard],
+    children: [{ path: 'student-profile', component: StudentProfileComponent }],
   },
   {
-    path: 'lecturer-profile',
-    component: LecturerProfileComponent,
+    path: 'lecturer',
+    component: LecturerComponent,
     canActivate: [LecturerAuthGuard],
+    children: [
+      { path: 'lecturer-profile', component: LecturerProfileComponent },
+      { path: 'student-registration', component: SignUpComponent },
+      { path: 'course-registration', component: CourseRegisterComponent },
+      { path: 'students', component: StudentsComponent },
+      { path: 'student/:id', component: StudentEditPageComponent },
+    ],
   },
+  { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent },
 ];
+
+// const routes: Routes = [
+//   { path: 'sign-in', component: SignInComponent },
+
+//   { path: 'student-registration', component: SignUpComponent },
+//   { path: 'course-registration', component: CourseRegisterComponent },
+//   { path: 'students', component: StudentsComponent },
+//   { path: 'student/:id', component: StudentEditPageComponent },
+//   {
+//     path: 'student-profile',
+//     component: StudentProfileComponent,
+//     canActivate: [StudentAuthGuard],
+//   },
+//   {
+//     path: 'lecturer-profile',
+//     component: LecturerProfileComponent,
+//     canActivate: [LecturerAuthGuard],
+//   },
+// ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

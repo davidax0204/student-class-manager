@@ -65,7 +65,7 @@ export class SignInComponent implements OnInit {
         this.password.value
       ).subscribe(
         () => {
-          this.router.navigate(['/student-profile']);
+          this.router.navigate(['/student/student-profile']);
         },
         (errorMessage) => {
           this.signInErrorMessage = errorMessage;
@@ -78,7 +78,7 @@ export class SignInComponent implements OnInit {
         this.password.value
       ).subscribe(
         () => {
-          this.router.navigate(['/lecturer-profile']);
+          this.router.navigate(['/lecturer/lecturer-profile']);
         },
         (errorMessage) => {
           this.signInErrorMessage = errorMessage;

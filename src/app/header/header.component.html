@@ -1,138 +1,3 @@
-<!-- <div *ngIf="isAuthenticatedStudent"
-     class="navigation-bar">
-
-  <div class="mobile-menu ">
-    <button class="main-menu menu-butttonnnn">
-      <div class="menu-line"
-           id="menu-line-top"></div>
-      <div class="menu-line"
-           id="menu-line-middle"></div>
-      <div class="menu-line"
-           id="menu-line-bottom"></div>
-    </button>
-    <div id="myLinks">
-      <a class="mobile-menu-search-container">
-        <input type="text"
-               placeholder="Search for a movie">
-        <button type="submit"
-                id="mobile-menu-search-button"><i class="fa fa-search"></i></button>
-      </a>
-
-      <a href="/profile">
-        <span>Profile </span>
-        <i class="user-button fa fa-user"></i>
-      </a>
-      <a href="/sign-up">
-        <span>Sign in/Join </span>
-        <i class="user-button fa fa-sign-in"></i>
-      </a>
-    </div>
-  </div>
-
-  <div class="logo-container">
-    <a routerLink="/home">
-
-      <img class="header-logo"
-           src="assets/pictures/Logo.png">
-
-    </a>
-  </div>
-
-
-  <form method="POST"
-        action="/sort"
-        class="search-container">
-    <input type="text"
-           name="sort"
-           placeholder="Search for a course">
-    <button type="submit"
-            class="search-button"><i class="fa fa-search fa-lg"></i></button>
-  </form>
-
-
-  <div class="header-user-button">
-    <a>
-      <button *ngIf="!isAuthenticatedStudent"
-              routerLink="/sign-in"
-              class="header-user-button-inner">
-        <i id="user"
-           class="user-button fa fa-user fa-lg"></i>
-      </button>
-    </a>
-    <a>
-      <button (click)="onStudentSignOut()"
-              *ngIf="isAuthenticatedStudent"
-              class="header-user-button-inner">
-        <i id="user"
-           class="user-button fa fa-sign-out fa-lg"></i>
-      </button>
-    </a>
-  </div>
-
-</div>
-
-
-<div *ngIf="isAuthenticatedLecturer"
-     class="navigation-bar">
-
-  <div class="mobile-menu ">
-    <button class="main-menu menu-butttonnnn">
-      <div class="menu-line"
-           id="menu-line-top"></div>
-      <div class="menu-line"
-           id="menu-line-middle"></div>
-      <div class="menu-line"
-           id="menu-line-bottom"></div>
-    </button>
-    <div id="myLinks">
-      <a class="mobile-menu-search-container">
-        <input type="text"
-               placeholder="Search for a movie">
-        <button type="submit"
-                id="mobile-menu-search-button"><i class="fa fa-search"></i></button>
-      </a>
-
-      <a href="/profile">
-        <span>Profile </span>
-        <i class="user-button fa fa-user"></i>
-      </a>
-      <a href="/sign-up">
-        <span>Sign in/Join </span>
-        <i class="user-button fa fa-sign-in"></i>
-      </a>
-    </div>
-  </div>
-
-  <div class="logo-container">
-    <a routerLink="/home">
-
-      <img class="header-logo"
-           src="assets/pictures/Logo.png">
-
-    </a>
-  </div>
-
-
-  <div class="header-user-button">
-    <a>
-      <button (click)="onLecturerSignOut()"
-              class="header-user-button-inner">
-        <i id="user"
-           class="user-button fa fa-sign-out fa-lg"></i>
-      </button>
-    </a>
-
-    <button routerLink="/students"
-            class="header-user-button-inner-admin user-button">Students</button>
-    <button routerLink="/lecturer-profile"
-            class="header-user-button-inner-admin user-button">Profile</button>
-
-  </div>
-
-</div> -->
-
-
-
 <div *ngIf="isAuthenticatedStudent"
      class="navigation-bar">
   <div class="mobile-menu">
@@ -154,7 +19,7 @@
         <div>
           <a routerLink="/home"> <i class="icon fas fa-book-reader"></i> Courses </a>
         </div>
-        <a routerLink="/student-profile"><i class="icon user-button fa fa-user"></i> Profile </a>
+        <a routerLink="/student/student-profile"><i class="icon user-button fa fa-user"></i> Profile </a>
         <a (click)="onStudentSignOut()"
            style="cursor: pointer;"><i class="icon fas fa-sign-out-alt"></i> Logout </a>
       </div>
@@ -163,7 +28,7 @@
   </div>
 
   <div class="logo-container">
-    <a routerLink="/home">
+    <a routerLink="/student/student-profile">
       <img class="header-logo"
            src="assets/pictures/Logo.png">
     </a>
@@ -182,40 +47,30 @@
 
 
   <div class="header-user-button">
-    <!-- <a>
-      <button *ngIf="!isAuthenticatedStudent"
-              routerLink="/sign-in"
-              class="header-user-button-inner">
-        <i id="user"
-
-           class="user-button fas fa-sign-in-alt fa-lg"></i>
-      </button>
-    </a> -->
 
     <a>
-      <button *ngIf="isAuthenticatedStudent"
-              class="header-user-button-inner">
+      <button class="header-user-button-inner">
         <i id="user"
            class="user-button fas fa-book-reader fa-lg"></i>
       </button>
     </a>
+
     <a>
-      <button routerLink="/student-profile"
-              *ngIf="isAuthenticatedStudent"
+      <button routerLink="/student/student-profile"
               class="header-user-button-inner">
         <i class="user-button fa fa-user fa-lg"></i>
       </button>
     </a>
+
     <a>
       <button (click)="onStudentSignOut()"
-              *ngIf="isAuthenticatedStudent"
               class="header-user-button-inner">
         <i id="user"
            class="user-button fas fa-sign-out-alt fa-lg"></i>
       </button>
     </a>
-  </div>
 
+  </div>
 </div>
 
 
@@ -240,12 +95,13 @@
       <div class="dropdown-content">
         <div>
 
-          <a routerLink="/lecturer-profile"><i class="icon user-button fa fa-user"></i> Profile </a>
-
-          <a routerLink="/students"
+          <a routerLink="/lecturer/lecturer-profile"><i class="icon user-button fa fa-user"></i> Profile </a>
+          <a routerLink="/lecturer/students"
              style="cursor: pointer;"> <i class="icon fas fa-user-graduate"></i> Students </a>
-          <a routerLink="/student-registration"
+          <a routerLink="/lecturer/student-registration"
              style="cursor: pointer;"> <i class="icon fas fa-plus"></i> Student Registration </a>
+          <a routerLink="/lecturer/course-registration"
+             style="cursor: pointer;"> <i class="icon fas fa-plus"></i> Course Registration </a>
           <a (click)="onLecturerSignOut()"
              style="cursor: pointer;"><i class="icon fas fa-sign-out-alt"></i> Logout </a>
         </div>
@@ -255,7 +111,7 @@
   </div>
 
   <div class="logo-container-admin">
-    <a routerLink="/home">
+    <a routerLink="/lecturer/lecturer-profile">
 
       <img class="header-logo"
            src="assets/pictures/Logo.png">
@@ -267,19 +123,19 @@
   <div class="header-user-button-admin">
 
 
-    <button routerLink="/lecturer-profile"
+    <button routerLink="/lecturer/lecturer-profile"
             class="header-user-button-inner-admin user-button">Profile <i id="user"
          class="icon-admin user-button fa fa-user fa-lg"></i></button>
 
-    <button routerLink="/students"
+    <button routerLink="/lecturer/students"
             class="header-user-button-inner-admin user-button">Students <i id="user"
          class="icon-admin user-button fas fa-book-reader fa-lg"></i> </button>
 
-    <button routerLink="/student-registration"
+    <button routerLink="/lecturer/student-registration"
             class="header-user-button-inner-admin user-button">Student Registration <i id="user"
          class="icon-admin user-button fas fa-plus fa-lg"></i> </button>
 
-    <button routerLink="/course-registration"
+    <button routerLink="/lecturer/course-registration"
             class="header-user-button-inner-admin user-button">Course Registration <i id="user"
          class="icon-admin user-button fas fa-plus fa-lg"></i> </button>
     <a>
