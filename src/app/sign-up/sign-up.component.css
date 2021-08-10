@@ -71,6 +71,19 @@ h1 {
   display: flex;
   flex-direction: column;
 }
+.sign-up-line-wrap-gender {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+}
+.sign-up-line-wrap-gender label {
+  padding-right: 5px;
+}
+
+input[type="radio"] {
+  margin-top: 6px;
+  vertical-align: middle;
+}
 
 @media (max-width: 500px) {
   .container {
