@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, pipe, VirtualTimeScheduler } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
+import { Course } from 'src/models/course.model';
 import { Lecturer } from 'src/models/lecturer.model';
 import { Student } from 'src/models/student.model';
 import { LecturerAuthService } from './lecturer-auth.service';
@@ -121,5 +122,13 @@ export class LecturerService {
         })
       )
       .subscribe();
+  }
+
+  registerCourse(course: Course) {
+    return this.http
+      .post(`${mongooseDB}/create-course`, {
+        course,
+      })
+      .pipe(catchError(this.LecturerAuthService.handleError));
   }
 }

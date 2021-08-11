@@ -136,6 +136,10 @@ export class LecturerAuthService {
       case 'Student validation failed: email: EMAIL_INVALID':
         errorMessage = 'The Email is invalid';
         break;
+
+      case 'E11000 duplicate key error collection: course-manager.courses index: name_1 dup key: { name: "test" }':
+        errorMessage = 'The Course name is taken';
+        break;
     }
 
     return throwError(errorMessage);

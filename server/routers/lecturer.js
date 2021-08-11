@@ -2,6 +2,7 @@ const express = require("express");
 const Student = require("../models/student");
 const Lecturer = require("../models/lecturer");
 const lecturerAuth = require("../middleware/lecturer-auth");
+const Course = require("../models/course");
 
 const router = new express.Router();
 
@@ -9,6 +10,16 @@ router.post("/create-user", async (req, res) => {
   try {
     const student = new Student(req.body);
     await student.save();
+    res.status(200).send();
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+router.post("/create-course", lecturerAuth, async (req, res) => {
+  try {
+    const course = new Course(req.body.course);
+    await course.save();
     res.status(200).send();
   } catch (e) {
     res.status(404).send(e.message);
