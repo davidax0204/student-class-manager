@@ -12,6 +12,7 @@ import { CourseRegisterComponent } from './course-register/course-register.compo
 import { LecturerComponent } from './lecturer/lecturer.component';
 import { StudentComponent } from './student/student.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CoursesComponent } from './courses/courses.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'student-registration', component: SignUpComponent },
       { path: 'course-registration', component: CourseRegisterComponent },
       { path: 'students', component: StudentsComponent },
+      { path: 'courses', component: CoursesComponent },
       { path: 'student/:id', component: StudentEditPageComponent },
     ],
   },

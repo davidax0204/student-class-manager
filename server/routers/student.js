@@ -14,7 +14,6 @@ router.post("/student-sign-in", async (req, res) => {
     const token = await student.generateAuthToken();
     res.status(200).send({ student, token });
   } catch (e) {
-    console.log(e.message);
     res.status(404).send(e.message);
   }
 });
@@ -28,7 +27,6 @@ router.post("/student-profile/edit", auth, async (req, res) => {
     await student.save();
     res.status(200).send({ student, token });
   } catch (e) {
-    console.log(e.message);
     res.status(400).send(e.message);
   }
 });

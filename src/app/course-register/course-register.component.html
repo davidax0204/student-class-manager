@@ -56,12 +56,20 @@
                    formControlName="startTime">
           </div>
 
+          <div class="invalid-message"
+               *ngIf="courseForm.controls.timesArray.controls[i].controls.startTime.touched && courseForm.controls.timesArray.controls[i].controls.startTime.touched">
+            {{invalidStartTimeMessage(i)}}</div>
+
 
           <div class="sign-up-line-wrap">
             <label><b>Course end time</b></label>
             <input type="time"
                    formControlName="endTime">
           </div>
+
+          <div class="invalid-message"
+               *ngIf="courseForm.controls.timesArray.controls[i].controls.endTime.touched && courseForm.controls.timesArray.controls[i].controls.endTime.touched">
+            {{invalidEndTimeMessage(i)}}</div>
 
 
           <div class="sign-up-line-wrap-gender">
@@ -100,8 +108,14 @@
 
           </div>
 
+          <div class="invalid-message"
+               *ngIf="courseForm.controls.timesArray.controls[i].controls.weekDay.touched && courseForm.controls.timesArray.controls[i].controls.weekDay.touched">
+            {{invalidCourseDaysMessage(i)}}</div>
+
           <hr>
         </div>
+
+
 
       </div>
       <button type="button"

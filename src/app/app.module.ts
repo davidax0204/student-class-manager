@@ -20,6 +20,7 @@ import { CourseRegisterComponent } from './course-register/course-register.compo
 import { LecturerComponent } from './lecturer/lecturer.component';
 import { StudentComponent } from './student/student.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CoursesComponent } from './courses/courses.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     LecturerComponent,
     StudentComponent,
     PageNotFoundComponent,
+    CoursesComponent,
   ],
   imports: [
     AppRoutingModule,

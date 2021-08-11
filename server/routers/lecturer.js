@@ -35,7 +35,6 @@ router.post("/lecturer-sign-in", async (req, res) => {
     const token = await lecturer.generateAuthToken();
     res.status(200).send({ lecturer, token });
   } catch (e) {
-    console.log(e.message);
     res.status(404).send(e.message);
   }
 });
@@ -72,6 +71,15 @@ router.get("/students", lecturerAuth, async (req, res) => {
   }
 });
 
+router.get("/courses", lecturerAuth, async (req, res) => {
+  try {
+    const courses = await Course.find({});
+    res.status(200).send(courses);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
 router.get("/students/:id", lecturerAuth, async (req, res) => {
   try {
     const student = await Student.findOne({ _id: req.params.id });
@@ -95,9 +103,19 @@ router.post("/students/:id/edit", lecturerAuth, async (req, res) => {
 
 router.get("/students/:id/delete", lecturerAuth, async (req, res) => {
   try {
-    const student = await Student.findOneAndDelete({ _id: req.params.id });
+    await Student.findOneAndDelete({ _id: req.params.id });
     const students = await Student.find({});
     res.status(200).send(students);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+router.get("/courses/:id/delete", lecturerAuth, async (req, res) => {
+  try {
+    await Course.findOneAndDelete({ _id: req.params.id });
+    const courses = await Course.find({});
+    res.status(200).send(courses);
   } catch (e) {
     res.status(404).send(e.message);
   }

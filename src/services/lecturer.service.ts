@@ -17,6 +17,8 @@ export class LecturerService {
   students = new BehaviorSubject<Student[]>(null);
   selectedStudent = new BehaviorSubject<Student>(null);
 
+  courses = new BehaviorSubject<Course[]>(null);
+
   constructor(
     private http: HttpClient,
     private LecturerAuthService: LecturerAuthService,
@@ -59,10 +61,21 @@ export class LecturerService {
 
   getStudents() {
     this.http
-      .get(`${mongooseDB}/students`)
+      .get<Student[]>(`${mongooseDB}/students`)
       .pipe(
-        map((students: Student[]) => {
+        map((students) => {
           this.students.next(students);
+        })
+      )
+      .subscribe();
+  }
+
+  getCourses() {
+    this.http
+      .get(`${mongooseDB}/courses`)
+      .pipe(
+        map((courses: Course[]) => {
+          this.courses.next(courses);
         })
       )
       .subscribe();
@@ -119,6 +132,17 @@ export class LecturerService {
       .pipe(
         map((students) => {
           this.students.next(students);
+        })
+      )
+      .subscribe();
+  }
+
+  deleteCourse(courseId: string) {
+    this.http
+      .get<Course[]>(`${mongooseDB}/courses/${courseId}/delete`)
+      .pipe(
+        map((courses) => {
+          this.courses.next(courses);
         })
       )
       .subscribe();

@@ -60,6 +60,14 @@ export class CourseRegisterComponent implements OnInit {
     this.courseEndDate = this.courseForm.get('courseEndDate');
   }
 
+  createItem(): FormGroup {
+    return this.formBuilder.group({
+      weekDay: ['0', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+    });
+  }
+
   ngOnInit(): void {}
 
   invalidCourseNameMessage() {
@@ -73,6 +81,31 @@ export class CourseRegisterComponent implements OnInit {
       return 'You must enter a start date';
     }
   }
+
+  invalidStartTimeMessage(index) {
+    if (this.courseForm.controls.courseStartDate.errors?.required) {
+      return 'You must enter a course start time';
+    }
+  }
+
+  invalidEndTimeMessage(index) {
+    if (this.courseForm.controls.courseEndDate.errors?.required) {
+      return 'You must enter a course end time';
+    }
+    console.log(this.courseForm.controls.courseEndDate);
+  }
+
+  invalidCourseDaysMessage(index) {
+    // if (this.courseForm.controls.weekDay.errors?.required) {
+    //   return 'You choose a day for the course';
+    // }
+  }
+
+  // invalidCourseStartTimeMessage() {
+  //   if (this.courseStartDate.errors?.required) {
+  //     return 'You must enter a start date';
+  //   }
+  // }
 
   invalidCourseEndDateMessage() {
     if (this.courseEndDate.errors?.required) {
@@ -112,17 +145,14 @@ export class CourseRegisterComponent implements OnInit {
   //   }
   // }
 
-  createItem(): FormGroup {
-    return this.formBuilder.group({
-      weekDay: '',
-      startTime: '',
-      endTime: '',
-    });
-  }
-
   addItem(): void {
     this.timesArray = this.courseForm.get('timesArray') as FormArray;
     this.timesArray.push(this.createItem());
+  }
+
+  removeItem(index) {
+    // this.timesArray.pop();
+    // this.demoArray.removeAt(this.demoArray.length - 1);
   }
 
   onSubmitProfileEditForm() {
