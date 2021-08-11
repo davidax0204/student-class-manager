@@ -8,6 +8,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { eachDayOfInterval, getDay } from 'date-fns';
 
 @Component({
   selector: 'app-course-register',
@@ -87,6 +88,12 @@ export class CourseRegisterComponent implements OnInit {
   }
 
   onSubmitProfileEditForm() {
-    console.log(this.daysData);
+    // let startDate = new Date(this.courseStartDate.value);
+    // let endDate = new Date(this.courseEndDate.value);
+    // let datesArray: Date[] = eachDayOfInterval({
+    //   start: startDate,
+    //   end: endDate,
+    // }).filter((weekDay) => getDay(weekDay) == 0);
+    // console.log(datesArray);
   }
 }
