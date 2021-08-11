@@ -42,13 +42,18 @@ export class CourseRegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private LecturerService: LecturerService
   ) {
-    this.courseForm = this.formBuilder.group({
-      courseName: ['test', [Validators.required]],
-      courseStartDate: ['2021-08-14', [Validators.required]],
-      courseEndDate: ['2021-08-25', [Validators.required]],
-      // daysData: this.formBuilder.array([]),
-      timesArray: this.formBuilder.array([this.createItem()]),
-    });
+    this.courseForm = this.formBuilder.group(
+      {
+        courseName: ['', [Validators.required]],
+        courseStartDate: ['', [Validators.required]],
+        courseEndDate: ['', [Validators.required]],
+        // daysData: this.formBuilder.array([]),
+        timesArray: this.formBuilder.array([this.createItem()]),
+      },
+      {
+        validators: this.endDateValidator,
+      }
+    );
 
     this.courseName = this.courseForm.get('courseName');
     this.courseStartDate = this.courseForm.get('courseStartDate');
@@ -70,9 +75,20 @@ export class CourseRegisterComponent implements OnInit {
   }
 
   invalidCourseEndDateMessage() {
-    if (this.courseStartDate.errors?.required) {
-      return 'You must enter a start date';
+    if (this.courseEndDate.errors?.required) {
+      return 'You must enter an end date';
     }
+    if (this.courseForm.errors?.invalidEndDate) {
+      return 'You must enter a valid end date';
+    }
+  }
+
+  endDateValidator(control: FormGroup): ValidationErrors | null {
+    const startDate = control.get('courseStartDate').value;
+    const endDate = control.get('courseEndDate').value;
+    Date.parse(startDate);
+    Date.parse(endDate);
+    return startDate >= endDate ? { invalidEndDate: true } : null;
   }
 
   onClickCloseModal() {
@@ -119,6 +135,8 @@ export class CourseRegisterComponent implements OnInit {
     // console.log(datesArray);
 
     this.timesArray = this.courseForm.get('timesArray') as FormArray;
+
+    console.log(new Date());
 
     // let time = new Date(this.timesArray.value[0].startTime);
     // console.log(Date.parse(this.timesArray.value[0].startTime));

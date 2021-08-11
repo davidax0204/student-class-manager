@@ -39,7 +39,10 @@
       </div>
 
       <div class="invalid-message"
-           *ngIf="courseEndDate.touched && courseEndDate.invalid">{{invalidCourseEndDateMessage()}}</div>
+           *ngIf="courseEndDate.touched && (courseEndDate.invalid || courseForm.errors?.invalidEndDate)">
+        {{invalidCourseEndDateMessage()}}
+      </div>
+
 
 
       <div formArrayName="timesArray"
