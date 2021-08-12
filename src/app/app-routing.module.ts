@@ -13,6 +13,7 @@ import { LecturerComponent } from './lecturer/lecturer.component';
 import { StudentComponent } from './student/student.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CoursesComponent } from './courses/courses.component';
+import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
@@ -33,30 +34,12 @@ const routes: Routes = [
       { path: 'students', component: StudentsComponent },
       { path: 'courses', component: CoursesComponent },
       { path: 'student/:id', component: StudentEditPageComponent },
+      { path: 'course/:id', component: CourseEditPageComponent },
     ],
   },
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
-
-// const routes: Routes = [
-//   { path: 'sign-in', component: SignInComponent },
-
-//   { path: 'student-registration', component: SignUpComponent },
-//   { path: 'course-registration', component: CourseRegisterComponent },
-//   { path: 'students', component: StudentsComponent },
-//   { path: 'student/:id', component: StudentEditPageComponent },
-//   {
-//     path: 'student-profile',
-//     component: StudentProfileComponent,
-//     canActivate: [StudentAuthGuard],
-//   },
-//   {
-//     path: 'lecturer-profile',
-//     component: LecturerProfileComponent,
-//     canActivate: [LecturerAuthGuard],
-//   },
-// ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

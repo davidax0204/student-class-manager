@@ -1,8 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, pipe, VirtualTimeScheduler } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { Course } from 'src/models/course.model';
 import { Lecturer } from 'src/models/lecturer.model';
@@ -18,11 +19,12 @@ export class LecturerService {
   selectedStudent = new BehaviorSubject<Student>(null);
 
   courses = new BehaviorSubject<Course[]>(null);
+  selectedCourse = new BehaviorSubject<Course>(null);
 
   constructor(
     private http: HttpClient,
     private LecturerAuthService: LecturerAuthService,
-    private router: Router
+    public datepipe: DatePipe
   ) {}
 
   editProfile(
@@ -83,11 +85,23 @@ export class LecturerService {
 
   getStudent(studentId: string) {
     this.http
-      .get(`${mongooseDB}/students/${studentId}`)
+      .get<Student>(`${mongooseDB}/students/${studentId}`)
       .pipe(
-        map((student: Student) => {
+        map((student) => {
           this.selectedStudent.next(student);
           localStorage.setItem('editedStudentId', student._id);
+        })
+      )
+      .subscribe();
+  }
+
+  getCourse(courseId: string) {
+    this.http
+      .get<Course>(`${mongooseDB}/course/${courseId}`)
+      .pipe(
+        map((course) => {
+          this.selectedCourse.next(course);
+          localStorage.setItem('editedCourseId', course._id);
         })
       )
       .subscribe();
@@ -96,11 +110,44 @@ export class LecturerService {
   autoGetStudent() {
     const editedStudentId = localStorage.getItem('editedStudentId');
     if (editedStudentId) {
-      this.getStudent(localStorage.getItem('editedStudentId'));
+      this.getStudent(editedStudentId);
+    }
+  }
+
+  autoGetCourse() {
+    const editedCourseId = localStorage.getItem('editedCourseId');
+    if (editedCourseId) {
+      this.getCourse(editedCourseId);
     }
   }
 
   editStudentProfile(
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    gender: string,
+    studentId: string,
+    password?: string
+  ) {
+    return this.http
+      .post<Student>(`${mongooseDB}/students/${studentId}/edit`, {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        gender,
+        password,
+      })
+      .pipe(
+        catchError(this.LecturerAuthService.handleError),
+        map((updatedStudent) => {
+          this.selectedStudent.next(updatedStudent);
+        })
+      );
+  }
+
+  editCourseDetails(
     firstName: string,
     lastName: string,
     email: string,

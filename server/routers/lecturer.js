@@ -89,6 +89,15 @@ router.get("/students/:id", lecturerAuth, async (req, res) => {
   }
 });
 
+router.get("/course/:id", lecturerAuth, async (req, res) => {
+  try {
+    const course = await Course.findOne({ _id: req.params.id });
+    res.status(200).send(course);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
 router.post("/students/:id/edit", lecturerAuth, async (req, res) => {
   const updates = Object.keys(req.body);
   try {

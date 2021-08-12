@@ -27,6 +27,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.coursesSub.unsubscribe();
   }
 
+  onEditCourse(courseId: string) {
+    this.LecturerService.getCourse(courseId);
+  }
+
   deleteCourse(courseId) {
     this.LecturerService.deleteCourse(courseId);
   }

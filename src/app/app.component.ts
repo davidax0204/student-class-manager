@@ -19,5 +19,6 @@ export class AppComponent implements OnInit {
     this.StudentAuthService.autoLogin();
     this.LecturerAuthService.autoLogin();
     this.lecurerSevice.autoGetStudent();
+    this.lecurerSevice.autoGetCourse();
   }
 }

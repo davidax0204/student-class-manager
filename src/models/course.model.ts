@@ -3,15 +3,15 @@ export class Course {
     public name: string,
     public startDate: Date,
     public endDate: Date,
-    public times: CourseTime,
+    public times: CourseTime[],
     public _id?: string
   ) {}
 }
 
 export class CourseTime {
   constructor(
-    public startHour: string,
-    public endHour: string,
-    public day: string
+    public startTime: string,
+    public endTime: string,
+    public weekDay: string
   ) {}
 }
