@@ -115,12 +115,9 @@ router.post("/courses/:id/edit", lecturerAuth, async (req, res) => {
   const updates = Object.keys(req.body);
   try {
     const course = await Course.findOne({ _id: req.params.id });
-
     updates.forEach((update) => (course[update] = req.body[update]));
-
-    console.log(course);
-    // await student.save();
-    // res.status(200).send(student);
+    await course.save();
+    res.status(200).send(course);
   } catch (e) {
     res.status(404).send(e.message);
   }

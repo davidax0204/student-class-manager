@@ -186,6 +186,15 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
       this.courseEndDate.value,
       this.courseForm.value.timesArray,
       this.activeCourse._id
-    ).subscribe();
+    ).subscribe(
+      () => {
+        this.isModalOpen = true;
+        this.msg = 'Your changes are successfully saved';
+      },
+      (errorMessage) => {
+        this.isModalOpen = true;
+        this.msg = errorMessage;
+      }
+    );
   }
 }

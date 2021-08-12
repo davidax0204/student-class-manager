@@ -150,14 +150,14 @@ export class LecturerService {
   }
 
   editCourseDetails(
-    courseName: string,
+    name: string,
     courseStartDate: string,
     courseEndDate: string,
     times: CourseTime,
     courseId: string
   ) {
     return this.http.post<Student>(`${mongooseDB}/courses/${courseId}/edit`, {
-      courseName,
+      name,
       courseStartDate,
       courseEndDate,
       times,
