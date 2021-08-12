@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, pipe, Subject, VirtualTimeScheduler } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
-import { Course } from 'src/models/course.model';
+import { Course, CourseTime } from 'src/models/course.model';
 import { Lecturer } from 'src/models/lecturer.model';
 import { Student } from 'src/models/student.model';
 import { LecturerAuthService } from './lecturer-auth.service';
@@ -101,7 +101,9 @@ export class LecturerService {
       .pipe(
         map((course) => {
           this.selectedCourse.next(course);
-          localStorage.setItem('editedCourseId', course._id);
+          if (course) {
+            localStorage.setItem('editedCourseId', course._id);
+          }
         })
       )
       .subscribe();
@@ -148,29 +150,18 @@ export class LecturerService {
   }
 
   editCourseDetails(
-    firstName: string,
-    lastName: string,
-    email: string,
-    phoneNumber: string,
-    gender: string,
-    studentId: string,
-    password?: string
+    courseName: string,
+    courseStartDate: string,
+    courseEndDate: string,
+    times: CourseTime,
+    courseId: string
   ) {
-    return this.http
-      .post<Student>(`${mongooseDB}/students/${studentId}/edit`, {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        gender,
-        password,
-      })
-      .pipe(
-        catchError(this.LecturerAuthService.handleError),
-        map((updatedStudent) => {
-          this.selectedStudent.next(updatedStudent);
-        })
-      );
+    return this.http.post<Student>(`${mongooseDB}/courses/${courseId}/edit`, {
+      courseName,
+      courseStartDate,
+      courseEndDate,
+      times,
+    });
   }
 
   deleteStudent(studentId: string) {

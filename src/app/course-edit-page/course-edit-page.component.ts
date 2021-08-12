@@ -153,23 +153,6 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
     this.isModalOpen = false;
   }
 
-  // onCheckboxChange(e) {
-  //   const checkArray: FormArray = this.courseForm.get('daysData') as FormArray;
-
-  //   if (e.target.checked) {
-  //     checkArray.push(new FormControl(e.target.value));
-  //   } else {
-  //     let i: number = 0;
-  //     checkArray.controls.forEach((item: FormControl) => {
-  //       if (item.value == e.target.value) {
-  //         checkArray.removeAt(i);
-  //         return;
-  //       }
-  //       i++;
-  //     });
-  //   }
-  // }
-
   addTime(): void {
     this.timesArray = this.courseForm.get('timesArray') as FormArray;
     this.timesArray.push(this.createItem());
@@ -188,29 +171,21 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
     // }).filter((weekDay) => getDay(weekDay) == 0);
     // console.log(datesArray);
 
-    this.timesArray = this.courseForm.get('timesArray') as FormArray;
+    // this.timesArray = this.courseForm.get('timesArray') as FormArray;
 
-    // let time = new Date(this.timesArray.value[0].startTime);
-    // console.log(Date.parse(this.timesArray.value[0].startTime));
+    // let course: Course = new Course(
+    //   this.courseName.value,
+    //   this.courseStartDate.value,
+    //   this.courseEndDate.value,
+    //   this.courseForm.value.timesArray
+    // );
 
-    // console.log(this.timesArray.value[0].startTime);
-
-    let course: Course = new Course(
+    this.LecturerService.editCourseDetails(
       this.courseName.value,
       this.courseStartDate.value,
       this.courseEndDate.value,
-      this.courseForm.value.timesArray
-    );
-
-    this.LecturerService.registerCourse(course).subscribe(
-      () => {
-        this.isModalOpen = true;
-        this.msg = 'The course has registered Successfully!';
-      },
-      (errorMessage) => {
-        this.isModalOpen = true;
-        this.msg = errorMessage;
-      }
-    );
+      this.courseForm.value.timesArray,
+      this.activeCourse._id
+    ).subscribe();
   }
 }

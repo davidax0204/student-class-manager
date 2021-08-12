@@ -22,6 +22,7 @@ router.post("/create-course", lecturerAuth, async (req, res) => {
     await course.save();
     res.status(200).send();
   } catch (e) {
+    console.log(e);
     res.status(404).send(e.message);
   }
 });
@@ -105,6 +106,21 @@ router.post("/students/:id/edit", lecturerAuth, async (req, res) => {
     updates.forEach((update) => (student[update] = req.body[update]));
     await student.save();
     res.status(200).send(student);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+router.post("/courses/:id/edit", lecturerAuth, async (req, res) => {
+  const updates = Object.keys(req.body);
+  try {
+    const course = await Course.findOne({ _id: req.params.id });
+
+    updates.forEach((update) => (course[update] = req.body[update]));
+
+    console.log(course);
+    // await student.save();
+    // res.status(200).send(student);
   } catch (e) {
     res.status(404).send(e.message);
   }
