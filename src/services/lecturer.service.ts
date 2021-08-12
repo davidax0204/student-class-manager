@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, pipe, VirtualTimeScheduler } from 'rxjs';
+import { BehaviorSubject, pipe, Subject, VirtualTimeScheduler } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { Course } from 'src/models/course.model';
@@ -19,7 +19,7 @@ export class LecturerService {
   selectedStudent = new BehaviorSubject<Student>(null);
 
   courses = new BehaviorSubject<Course[]>(null);
-  selectedCourse = new BehaviorSubject<Course>(null);
+  selectedCourse = new Subject<Course>();
 
   constructor(
     private http: HttpClient,

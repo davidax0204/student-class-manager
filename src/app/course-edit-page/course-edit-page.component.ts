@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -10,13 +10,14 @@ import {
 import { Course } from 'src/models/course.model';
 import { LecturerService } from 'src/services/lecturer.service';
 import { DatePipe } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-edit-page',
   templateUrl: './course-edit-page.component.html',
   styleUrls: ['./course-edit-page.component.css'],
 })
-export class CourseEditPageComponent implements OnInit {
+export class CourseEditPageComponent implements OnInit, OnDestroy {
   courseForm: FormGroup;
   timesArray: FormArray;
   courseName;
@@ -24,6 +25,7 @@ export class CourseEditPageComponent implements OnInit {
   courseEndDate;
   weekDay: FormControl;
 
+  courseSub: Subscription;
   activeCourse: Course;
 
   isModalOpen = false;
@@ -32,7 +34,7 @@ export class CourseEditPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private LecturerService: LecturerService,
-    public datepipe: DatePipe
+    private datepipe: DatePipe
   ) {
     this.courseForm = this.formBuilder.group(
       {
@@ -60,66 +62,50 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.LecturerService.selectedCourse.subscribe((course: Course) => {
-      this.activeCourse = !course ? null : course;
+    this.courseSub = this.LecturerService.selectedCourse.subscribe(
+      (course: Course) => {
+        this.activeCourse = !course ? null : course;
 
-      if (this.activeCourse) {
-        this.courseForm.controls['courseName'].setValue(this.activeCourse.name);
+        if (this.activeCourse) {
+          this.courseForm.controls['courseName'].setValue(
+            this.activeCourse.name
+          );
 
-        this.courseForm.controls['courseStartDate'].setValue(
-          this.datepipe.transform(
-            new Date(this.activeCourse.startDate),
-            'yyyy-MM-dd'
-          )
-        );
+          this.courseForm.controls['courseStartDate'].setValue(
+            this.datepipe.transform(
+              new Date(this.activeCourse.startDate),
+              'yyyy-MM-dd'
+            )
+          );
 
-        this.courseForm.controls['courseEndDate'].setValue(
-          this.datepipe.transform(
-            new Date(this.activeCourse.endDate),
-            'yyyy-MM-dd'
-          )
-        );
+          this.courseForm.controls['courseEndDate'].setValue(
+            this.datepipe.transform(
+              new Date(this.activeCourse.endDate),
+              'yyyy-MM-dd'
+            )
+          );
 
-        for (let index = 0; index < course.times.length; index++) {
-          this.timesArray = this.courseForm.get('timesArray') as FormArray;
+          for (let index = 0; index < course.times.length; index++) {
+            this.timesArray = this.courseForm.get('timesArray') as FormArray;
+            this.timesArray.push(this.createItem());
 
-          this.timesArray.push(this.createItem());
-          console.log(this.timesArray.controls[index].get('weekDay').value);
-
-          this.timesArray.controls[index]
-            .get('weekDay')
-            .setValue(course.times[index].weekDay);
-          this.timesArray.controls[index]
-            .get('endTime')
-            .setValue(course.times[index].endTime);
-          this.timesArray.controls[index]
-            .get('startTime')
-            .setValue(course.times[index].startTime);
+            this.timesArray.controls[index]
+              .get('weekDay')
+              .setValue(course.times[index].weekDay);
+            this.timesArray.controls[index]
+              .get('endTime')
+              .setValue(course.times[index].endTime);
+            this.timesArray.controls[index]
+              .get('startTime')
+              .setValue(course.times[index].startTime);
+          }
         }
       }
-    });
+    );
+  }
 
-    // this.studentSub = this.lecturerService.selectedStudent.subscribe(
-    //   (student: Student) => {
-    //     this.activeStudent = !student ? null : student;
-
-    //     if (this.activeStudent) {
-    //       this.profilePage.controls['firstName'].setValue(
-    //         this.activeStudent.firstName
-    //       );
-    //       this.profilePage.controls['lastName'].setValue(
-    //         this.activeStudent.lastName
-    //       );
-    //       this.profilePage.controls['email'].setValue(this.activeStudent.email);
-    //       this.profilePage.controls['phoneNumber'].setValue(
-    //         this.activeStudent.phoneNumber
-    //       );
-    //       this.profilePage.controls['gender'].setValue(
-    //         this.activeStudent.gender
-    //       );
-    //     }
-    //   }
-    // );
+  ngOnDestroy() {
+    this.courseSub.unsubscribe();
   }
 
   invalidCourseNameMessage() {
@@ -141,9 +127,6 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   invalidEndTimeMessage(index) {
-    // console.log(this.courseForm.value.timesArray[index]);
-    console.log(this.courseForm);
-
     if (this.courseForm.controls.courseEndDate.errors?.required) {
       return 'You must enter a course end time';
     }
