@@ -92,7 +92,6 @@ export class CourseRegisterComponent implements OnInit {
     if (this.courseForm.controls.courseEndDate.errors?.required) {
       return 'You must enter a course end time';
     }
-    console.log(this.courseForm.controls.courseEndDate);
   }
 
   invalidCourseDaysMessage(index) {
@@ -166,8 +165,6 @@ export class CourseRegisterComponent implements OnInit {
 
     this.timesArray = this.courseForm.get('timesArray') as FormArray;
 
-    console.log(new Date());
-
     // let time = new Date(this.timesArray.value[0].startTime);
     // console.log(Date.parse(this.timesArray.value[0].startTime));
 
@@ -177,7 +174,7 @@ export class CourseRegisterComponent implements OnInit {
       this.courseName.value,
       this.courseStartDate.value,
       this.courseEndDate.value,
-      this.timesArray.value
+      this.courseForm.value.timesArray
     );
 
     this.LecturerService.registerCourse(course).subscribe(

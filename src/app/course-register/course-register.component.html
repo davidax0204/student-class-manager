@@ -78,32 +78,26 @@
             <input id="sunday"
                    type="radio"
                    value="0"
-                   name="weekDay"
                    formControlName="weekDay"> Sunday
             <input id="monday"
                    type="radio"
                    value="1"
-                   name="weekDay"
                    formControlName="weekDay"> Monday
             <input id="tuesday"
                    type="radio"
                    value="2"
-                   name="weekDay"
                    formControlName="weekDay"> Tuesday
             <input id="Wednesday"
                    type="radio"
                    value="3"
-                   name="weekDay"
                    formControlName="weekDay"> Wednesday
             <input id="thursday"
                    type="radio"
                    value="4"
-                   name="weekDay"
                    formControlName="weekDay"> Thursday
             <input id="friday"
                    type="radio"
                    value="5"
-                   name="weekDay"
                    formControlName="weekDay"> Friday
 
           </div>
@@ -112,17 +106,17 @@
                *ngIf="courseForm.controls.timesArray.controls[i].controls.weekDay.touched && courseForm.controls.timesArray.controls[i].controls.weekDay.touched">
             {{invalidCourseDaysMessage(i)}}</div>
 
-          <hr>
         </div>
 
 
 
       </div>
-      <button type="button"
-              (click)="addItem()">Add Item</button>
 
       <hr>
 
+      <button class="registerbtn"
+              type="button"
+              (click)="addItem()">Add course day</button>
       <button type="submit"
               class="registerbtn"
               [disabled]="courseForm.invalid">Save</button>
