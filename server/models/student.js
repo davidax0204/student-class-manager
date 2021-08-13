@@ -80,21 +80,29 @@ const studentSchema = new mongoose.Schema({
   },
   courses: [
     {
-      courseId: {
-        type: String,
-      },
-      name: {
-        type: String,
-      },
-      startHour: {
-        type: String,
-      },
-      endHour: {
-        type: String,
-      },
-      days: [
+      course: [
         {
-          day: {
+          courseId: {
+            type: String,
+          },
+          name: {
+            type: String,
+          },
+          startTime: {
+            type: String,
+          },
+          endTime: {
+            type: String,
+          },
+        },
+      ],
+    },
+  ],
+  days: [
+    {
+      day: [
+        {
+          courseDate: {
             type: String,
           },
           attendance: {

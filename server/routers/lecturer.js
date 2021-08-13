@@ -3,6 +3,7 @@ const Student = require("../models/student");
 const Lecturer = require("../models/lecturer");
 const lecturerAuth = require("../middleware/lecturer-auth");
 const Course = require("../models/course");
+const { eachDayOfInterval, getDay } = require("date-fns");
 
 const router = new express.Router();
 
@@ -151,8 +152,40 @@ router.get(
       const student = await Student.findOne({ _id: req.params.studentId });
       const course = await Course.findOne({ _id: req.params.courseId });
 
+      let startDate = new Date(course.startDate);
+      let endDate = new Date(course.endDate);
+
+      for (let index = 0; index < course.times.length; index++) {
+        let datesArray = eachDayOfInterval({
+          start: startDate,
+          end: endDate,
+        }).filter((weekDay) => getDay(weekDay) == course.times[index].weekDay);
+
+        let courseData = {
+          courseId: course._id,
+          name: course.name,
+          startTime: course.times[index].startTime,
+          endTime: course.times[index].endTime,
+          days: [],
+        };
+
+        student.courses = student.courses.concat({ course: courseData });
+
+        for (let day = 0; day < datesArray.length; day++) {
+          let courseDay = {
+            courseDate: datesArray[day],
+            attendance: false,
+            reason: "",
+          };
+
+          student.days = student.days.concat({
+            day: courseDay,
+          });
+        }
+      }
+
+      await student.save();
       console.log(student);
-      console.log(course);
     } catch (e) {
       console.log(e);
     }
