@@ -78,6 +78,37 @@ const studentSchema = new mongoose.Schema({
       }
     },
   },
+  courses: [
+    {
+      courseId: {
+        type: String,
+      },
+      name: {
+        type: String,
+      },
+      startHour: {
+        type: String,
+      },
+      endHour: {
+        type: String,
+      },
+      days: [
+        {
+          day: {
+            type: String,
+          },
+          attendance: {
+            type: Boolean,
+            default: false,
+          },
+          reason: {
+            type: String,
+            default: "",
+          },
+        },
+      ],
+    },
+  ],
   tokens: [
     {
       token: {

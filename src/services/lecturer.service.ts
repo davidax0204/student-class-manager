@@ -193,4 +193,12 @@ export class LecturerService {
       })
       .pipe(catchError(this.LecturerAuthService.handleError));
   }
+
+  asignStudentToCourse(studentId: string, courseId: string) {
+    console.log('saasd');
+
+    this.http
+      .get(`${mongooseDB}/asign-course/${courseId}/student/${studentId}`)
+      .subscribe();
+  }
 }

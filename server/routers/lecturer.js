@@ -143,4 +143,20 @@ router.get("/courses/:id/delete", lecturerAuth, async (req, res) => {
   }
 });
 
+router.get(
+  "/asign-course/:courseId/student/:studentId",
+  lecturerAuth,
+  async (req, res) => {
+    try {
+      const student = await Student.findOne({ _id: req.params.studentId });
+      const course = await Course.findOne({ _id: req.params.courseId });
+
+      console.log(student);
+      console.log(course);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 module.exports = router;

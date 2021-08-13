@@ -31,6 +31,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.LecturerService.getCourse(courseId);
   }
 
+  onAsignStudentsToCourse(courseId) {
+    this.LecturerService.getCourse(courseId);
+  }
+
   deleteCourse(courseId) {
     this.LecturerService.deleteCourse(courseId);
   }

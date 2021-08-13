@@ -28,7 +28,8 @@
         <div class="user-card-buttons-actions">
           <button (click)="onEditCourse(course._id)"
                   routerLink="/lecturer/course/{{course._id}}">Edit course details</button>
-          <button>Edit course students</button>
+          <button (click)="onAsignStudentsToCourse(course._id)"
+                  routerLink="/lecturer/course/{{course._id}}/edit-students">Edit course students</button>
           <button (click)="deleteCourse(course._id)">Delete Course</button>
         </div>
 

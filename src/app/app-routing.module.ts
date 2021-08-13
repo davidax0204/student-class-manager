@@ -14,6 +14,7 @@ import { StudentComponent } from './student/student.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
+import { CourseStudnetsEditComponent } from './course-studnets-edit/course-studnets-edit.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
@@ -35,6 +36,10 @@ const routes: Routes = [
       { path: 'courses', component: CoursesComponent },
       { path: 'student/:id', component: StudentEditPageComponent },
       { path: 'course/:id', component: CourseEditPageComponent },
+      {
+        path: 'course/:id/edit-students',
+        component: CourseStudnetsEditComponent,
+      },
     ],
   },
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
