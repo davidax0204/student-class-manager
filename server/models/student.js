@@ -80,41 +80,31 @@ const studentSchema = new mongoose.Schema({
   },
   courses: [
     {
-      course: [
-        {
-          courseId: {
-            type: String,
-          },
-          name: {
-            type: String,
-          },
-          startTime: {
-            type: String,
-          },
-          endTime: {
-            type: String,
-          },
-        },
-      ],
-    },
-  ],
-  days: [
-    {
-      day: [
+      days: [
         {
           courseDate: {
             type: String,
           },
           attendance: {
             type: Boolean,
-            default: false,
           },
           reason: {
             type: String,
-            default: "",
           },
         },
       ],
+      courseId: {
+        type: String,
+      },
+      name: {
+        type: String,
+      },
+      startTime: {
+        type: String,
+      },
+      endTime: {
+        type: String,
+      },
     },
   ],
   tokens: [

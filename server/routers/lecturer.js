@@ -144,6 +144,54 @@ router.get("/courses/:id/delete", lecturerAuth, async (req, res) => {
   }
 });
 
+// router.get(
+//   "/asign-course/:courseId/student/:studentId",
+//   lecturerAuth,
+//   async (req, res) => {
+//     try {
+//       const student = await Student.findOne({ _id: req.params.studentId });
+//       const course = await Course.findOne({ _id: req.params.courseId });
+
+//       let startDate = new Date(course.startDate);
+//       let endDate = new Date(course.endDate);
+
+//       for (let index = 0; index < course.times.length; index++) {
+//         let datesArray = eachDayOfInterval({
+//           start: startDate,
+//           end: endDate,
+//         }).filter((weekDay) => getDay(weekDay) == course.times[index].weekDay);
+
+//         let courseData = {
+//           courseId: course._id,
+//           name: course.name,
+//           startTime: course.times[index].startTime,
+//           endTime: course.times[index].endTime,
+//           days: [],
+//         };
+
+//         student.courses = student.courses.concat({ course: courseData });
+
+//         for (let day = 0; day < datesArray.length; day++) {
+//           let courseDay = {
+//             courseDate: datesArray[day],
+//             attendance: false,
+//             reason: "",
+//           };
+
+//           student.days = student.days.concat({
+//             day: courseDay,
+//           });
+//         }
+//       }
+
+//       await student.save();
+//       console.log(student);
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+// );
+
 router.get(
   "/asign-course/:courseId/student/:studentId",
   lecturerAuth,
@@ -161,35 +209,69 @@ router.get(
           end: endDate,
         }).filter((weekDay) => getDay(weekDay) == course.times[index].weekDay);
 
-        let courseData = {
+        student.courses = student.courses.concat({
           courseId: course._id,
           name: course.name,
           startTime: course.times[index].startTime,
           endTime: course.times[index].endTime,
-          days: [],
-        };
-
-        student.courses = student.courses.concat({ course: courseData });
+        });
 
         for (let day = 0; day < datesArray.length; day++) {
-          let courseDay = {
+          student.courses[index].days = student.courses[index].days.concat({
             courseDate: datesArray[day],
             attendance: false,
             reason: "",
-          };
-
-          student.days = student.days.concat({
-            day: courseDay,
           });
         }
       }
 
       await student.save();
-      console.log(student);
+      res.status(200).send(student.courses);
     } catch (e) {
       console.log(e);
     }
   }
 );
+
+// router.get(
+//   "/asign-course/:courseId/student/:studentId",
+//   lecturerAuth,
+//   async (req, res) => {
+//     try {
+//       const student = await Student.findOne({ _id: req.params.studentId });
+
+//       let datesArray = [
+//         '8.13.2021','9.13.2021'
+//       ]
+
+//       let timesArray = [
+//         '09:00','10:00'
+//       ]
+
+//       for (let index = 0; index < timesArray.length; index++) {
+
+//         student.courses[index] = {
+//           courseId: index,
+//           startTime: timesArray[index],
+//         };
+
+//         for (let day = 0; day < datesArray.length; day++) {
+//           student.courses[index].day.push({
+//             courseDate: datesArray[day],
+//             attendance: false,
+//             reason: "",
+//           })
+//         }
+//       }
+
+//       await student.save();
+//       console.log(student);
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+// );
+
+// student.days.day.pull({ courseId: "61155838b1fff211dd9a8765" });
 
 module.exports = router;
