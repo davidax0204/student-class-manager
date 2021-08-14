@@ -17,7 +17,7 @@
 
       <div class="dropdown-content">
         <div>
-          <a routerLink="/home"> <i class="icon fas fa-book-reader"></i> Courses </a>
+          <a routerLink="/student/student-courses"> <i class="icon fas fa-book-reader"></i> Courses </a>
         </div>
         <a routerLink="/student/student-profile"><i class="icon user-button fa fa-user"></i> Profile </a>
         <a (click)="onStudentSignOut()"
@@ -49,7 +49,8 @@
   <div class="header-user-button">
 
     <a>
-      <button class="header-user-button-inner">
+      <button routerLink="/student/student-courses"
+              class="header-user-button-inner">
         <i id="user"
            class="user-button fas fa-book-reader fa-lg"></i>
       </button>

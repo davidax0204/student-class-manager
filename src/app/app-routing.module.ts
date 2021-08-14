@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { CoursesComponent } from './courses/courses.component';
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
 import { CourseStudnetsEditComponent } from './course-studnets-edit/course-studnets-edit.component';
+import { StudentCoursesComponent } from './student-courses/student-courses.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
@@ -22,7 +23,10 @@ const routes: Routes = [
     path: 'student',
     component: StudentComponent,
     canActivate: [StudentAuthGuard],
-    children: [{ path: 'student-profile', component: StudentProfileComponent }],
+    children: [
+      { path: 'student-profile', component: StudentProfileComponent },
+      { path: 'student-courses', component: StudentCoursesComponent },
+    ],
   },
   {
     path: 'lecturer',

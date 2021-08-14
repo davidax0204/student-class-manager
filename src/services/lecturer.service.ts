@@ -196,9 +196,27 @@ export class LecturerService {
 
   asignStudentToCourse(studentId: string, courseId: string) {
     this.http
-      .get(`${mongooseDB}/asign-course/${courseId}/student/${studentId}`)
-      .subscribe((res) => {
-        console.log(res);
-      });
+      .get<Student[]>(
+        `${mongooseDB}/asign-course/${courseId}/student/${studentId}`
+      )
+      .pipe(
+        map((students) => {
+          this.students.next(students);
+        })
+      )
+      .subscribe();
+  }
+
+  removeStudentFromCourse(studentId: string, courseId: string) {
+    this.http
+      .get<Student[]>(
+        `${mongooseDB}/remove-course/${courseId}/student/${studentId}`
+      )
+      // .pipe(
+      //   map((students) => {
+      //     this.students.next(students);
+      //   })
+      // )
+      .subscribe();
   }
 }

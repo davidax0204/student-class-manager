@@ -34,10 +34,31 @@ export class CourseStudnetsEditComponent implements OnInit, OnDestroy {
     this.studentsSub.unsubscribe();
     // this.courseSub.unsubscribe();
   }
+
   onAsignStudent(studentId) {
     this.LecturerService.asignStudentToCourse(
       studentId,
       this.selectedCourse._id
     );
+  }
+  onRemoveStudentCourse(studentId) {
+    this.LecturerService.removeStudentFromCourse(
+      studentId,
+      this.selectedCourse._id
+    );
+  }
+
+  isAsigned(studentId, courseId): boolean {
+    let flag: boolean = false;
+    this.students.forEach((student) => {
+      if (studentId === student._id) {
+        student.courses.forEach((course) => {
+          if (course.courseId === courseId) {
+            flag = true;
+          }
+        });
+      }
+    });
+    return flag;
   }
 }

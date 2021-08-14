@@ -4,7 +4,7 @@ const Lecturer = require("../models/lecturer");
 const lecturerAuth = require("../middleware/lecturer-auth");
 const Course = require("../models/course");
 const { eachDayOfInterval, getDay } = require("date-fns");
-const { syncIndexes } = require("../models/student");
+const mongoose = require("mongoose");
 
 const router = new express.Router();
 
@@ -230,51 +230,40 @@ router.get(
       }
 
       await student.save();
-      res.status(200).send(student.courses);
+      const students = await Student.find({});
+      res.status(200).send(students);
     } catch (e) {
       console.log(e);
     }
   }
 );
 
-// router.get(
-//   "/asign-course/:courseId/student/:studentId",
-//   lecturerAuth,
-//   async (req, res) => {
-//     try {
-//       const student = await Student.findOne({ _id: req.params.studentId });
+router.get(
+  "/remove-course/:courseId/student/:studentId",
+  lecturerAuth,
+  async (req, res) => {
+    try {
+      const student = await Student.findOne({ _id: req.params.studentId });
 
-//       let datesArray = [
-//         '8.13.2021','9.13.2021'
-//       ]
+      student.courses.pull({ courseId: req.params.courseId });
 
-//       let timesArray = [
-//         '09:00','10:00'
-//       ]
+      Student.findOneAndUpdate(
+        { _id: req.params.studentId },
+        { $pull: { courses: { courseId: req.params.courseId } } },
+        { multi: true }
+      );
 
-//       for (let index = 0; index < timesArray.length; index++) {
+      Student.update(
+        { _id: mongoose.Types.ObjectId(req.params.studentId) },
+        { $pull: { courses: { courseId: req.params.courseId } } }
+      );
 
-//         student.courses[index] = {
-//           courseId: index,
-//           startTime: timesArray[index],
-//         };
-
-//         for (let day = 0; day < datesArray.length; day++) {
-//           student.courses[index].day.push({
-//             courseDate: datesArray[day],
-//             attendance: false,
-//             reason: "",
-//           })
-//         }
-//       }
-
-//       await student.save();
-//       console.log(student);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   }
-// );
+      console.log(student);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
 
 // student.days.day.pull({ courseId: "61155838b1fff211dd9a8765" });
 

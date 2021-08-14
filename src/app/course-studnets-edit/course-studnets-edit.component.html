@@ -23,7 +23,10 @@
         </div>
 
         <div class="user-card-buttons-actions">
-          <button (click)="onAsignStudent(student._id)">Asign Student</button>
+          <button *ngIf="!isAsigned(student._id,selectedCourse._id)"
+                  (click)="onAsignStudent(student._id)">Asign Student</button>
+          <button *ngIf="isAsigned(student._id,selectedCourse._id)"
+                  (click)="onRemoveStudentCourse(student._id)">Remove Student</button>
         </div>
 
       </div>

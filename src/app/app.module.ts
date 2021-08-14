@@ -23,6 +23,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { CoursesComponent } from './courses/courses.component';
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
 import { CourseStudnetsEditComponent } from './course-studnets-edit/course-studnets-edit.component';
+import { StudentCoursesComponent } from './student-courses/student-courses.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { CourseStudnetsEditComponent } from './course-studnets-edit/course-studn
     CoursesComponent,
     CourseEditPageComponent,
     CourseStudnetsEditComponent,
+    StudentCoursesComponent,
   ],
   imports: [
     AppRoutingModule,

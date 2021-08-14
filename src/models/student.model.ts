@@ -7,6 +7,7 @@ export class Student {
     public gender: string,
     public _id: string,
     public _token: string,
+    public courses?: any[],
     public password?: string
   ) {}
 }
