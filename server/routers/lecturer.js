@@ -245,17 +245,10 @@ router.get(
     try {
       const student = await Student.findOne({ _id: req.params.studentId });
 
-      student.courses.pull({ courseId: req.params.courseId });
-
-      Student.findOneAndUpdate(
+      await Student.updateMany(
         { _id: req.params.studentId },
         { $pull: { courses: { courseId: req.params.courseId } } },
-        { multi: true }
-      );
-
-      Student.update(
-        { _id: mongoose.Types.ObjectId(req.params.studentId) },
-        { $pull: { courses: { courseId: req.params.courseId } } }
+        { new: true }
       );
 
       console.log(student);
