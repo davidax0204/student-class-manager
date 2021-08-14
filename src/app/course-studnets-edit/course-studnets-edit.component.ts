@@ -36,6 +36,8 @@ export class CourseStudnetsEditComponent implements OnInit, OnDestroy {
   }
 
   onAsignStudent(studentId) {
+    console.log(studentId);
+
     this.LecturerService.asignStudentToCourse(
       studentId,
       this.selectedCourse._id

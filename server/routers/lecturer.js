@@ -234,6 +234,7 @@ router.get(
       res.status(200).send(students);
     } catch (e) {
       console.log(e);
+      res.status(404).send(e.message);
     }
   }
 );
@@ -251,9 +252,11 @@ router.get(
         { new: true }
       );
 
-      console.log(student);
+      const students = await Student.find({});
+      res.status(200).send(students);
     } catch (e) {
       console.log(e);
+      res.status(404).send(e.message);
     }
   }
 );

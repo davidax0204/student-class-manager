@@ -212,11 +212,11 @@ export class LecturerService {
       .get<Student[]>(
         `${mongooseDB}/remove-course/${courseId}/student/${studentId}`
       )
-      // .pipe(
-      //   map((students) => {
-      //     this.students.next(students);
-      //   })
-      // )
+      .pipe(
+        map((students) => {
+          this.students.next(students);
+        })
+      )
       .subscribe();
   }
 }
