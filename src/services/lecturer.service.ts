@@ -195,10 +195,10 @@ export class LecturerService {
   }
 
   asignStudentToCourse(studentId: string, courseId: string) {
-    console.log('saasd');
-
     this.http
       .get(`${mongooseDB}/asign-course/${courseId}/student/${studentId}`)
-      .subscribe();
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }
