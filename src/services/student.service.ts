@@ -60,7 +60,7 @@ export class StudentService {
 
   getCourses() {
     this.http
-      .get<Course[]>(`${mongooseDB}/courses`)
+      .get<Course[]>(`${mongooseDB}/student-courses`)
       .pipe(
         map((courses) => {
           this.courses.next(courses);
@@ -71,7 +71,13 @@ export class StudentService {
 
   accpetAttendance(courseId: String, dayId: string) {
     this.http
-      .get(`${mongooseDB}/course/accept/${courseId}/${dayId}`)
+      .get<Course[]>(`${mongooseDB}/course/accept/${courseId}/${dayId}`)
+      .pipe(
+        map((courses) => {
+          this.courses.next(courses);
+          console.log(courses);
+        })
+      )
       .subscribe();
   }
 }

@@ -4,7 +4,6 @@ const Lecturer = require("../models/lecturer");
 const lecturerAuth = require("../middleware/lecturer-auth");
 const Course = require("../models/course");
 const { eachDayOfInterval, getDay } = require("date-fns");
-const mongoose = require("mongoose");
 
 const router = new express.Router();
 

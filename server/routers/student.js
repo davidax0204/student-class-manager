@@ -42,7 +42,7 @@ router.get("/student-log-out", auth, async (req, res) => {
   }
 });
 
-router.get("/courses", auth, (req, res) => {
+router.get("/student-courses", auth, (req, res) => {
   try {
     const student = req.student;
     res.status(200).send(student.courses);
@@ -77,7 +77,9 @@ router.get("/course/accept/:courseId/:dayId", auth, async (req, res) => {
       }
     );
 
-    res.status(200).send(student);
+    console.log(student.courses[1].days);
+
+    res.status(200).send(student.courses);
   } catch (e) {
     console.log(e);
     res.status(404).send(e.message);

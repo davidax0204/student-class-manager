@@ -16,7 +16,6 @@ export class StudentCoursesComponent implements OnInit {
     this.studentService.getCourses();
     this.studentService.courses.subscribe((courses: Course[]) => {
       this.courses = courses;
-      console.log(this.courses);
     });
   }
 
