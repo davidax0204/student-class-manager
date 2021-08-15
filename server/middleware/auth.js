@@ -3,7 +3,6 @@ const Student = require("../models/student");
 
 const auth = async (req, res, next) => {
   try {
-    console.log(req.query.auth);
     const token = req.query.auth;
     const decoded = jwt.verify(token, process.env.JWT_SECRET_STUDENT);
     const student = await Student.findOne({

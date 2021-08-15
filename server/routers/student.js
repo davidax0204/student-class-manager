@@ -53,9 +53,7 @@ router.get("/student-courses", auth, (req, res) => {
 
 router.get("/course/accept/:courseId/:dayId", auth, async (req, res) => {
   try {
-    const student = req.student;
-
-    await Student.findOneAndUpdate(
+    const student = await Student.findOneAndUpdate(
       {
         courses: {
           $elemMatch: { _id: Mongoose.Types.ObjectId(req.params.courseId) },
@@ -64,8 +62,12 @@ router.get("/course/accept/:courseId/:dayId", auth, async (req, res) => {
           $elemMatch: { _id: Mongoose.Types.ObjectId(req.params.dayId) },
         },
       },
-      { "courses.$[courseIndex].days.$[dayIndex].attendance": true },
       {
+        "courses.$[courseIndex].days.$[dayIndex].attendance": true,
+        "courses.$[courseIndex].days.$[dayIndex].reason": "",
+      },
+      {
+        new: true,
         arrayFilters: [
           {
             "courseIndex._id": Mongoose.Types.ObjectId(req.params.courseId),
@@ -77,7 +79,40 @@ router.get("/course/accept/:courseId/:dayId", auth, async (req, res) => {
       }
     );
 
-    console.log(student.courses[1].days);
+    res.status(200).send(student.courses);
+  } catch (e) {
+    console.log(e);
+    res.status(404).send(e.message);
+  }
+});
+
+router.post("/course/deny/:courseId/:dayId", auth, async (req, res) => {
+  try {
+    const student = await Student.findOneAndUpdate(
+      {
+        courses: {
+          $elemMatch: { _id: Mongoose.Types.ObjectId(req.params.courseId) },
+        },
+        "courses.days": {
+          $elemMatch: { _id: Mongoose.Types.ObjectId(req.params.dayId) },
+        },
+      },
+      {
+        "courses.$[courseIndex].days.$[dayIndex].attendance": false,
+        "courses.$[courseIndex].days.$[dayIndex].reason": req.body.reason,
+      },
+      {
+        new: true,
+        arrayFilters: [
+          {
+            "courseIndex._id": Mongoose.Types.ObjectId(req.params.courseId),
+          },
+          {
+            "dayIndex._id": Mongoose.Types.ObjectId(req.params.dayId),
+          },
+        ],
+      }
+    );
 
     res.status(200).send(student.courses);
   } catch (e) {

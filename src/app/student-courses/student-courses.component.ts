@@ -9,6 +9,11 @@ import { StudentService } from 'src/services/student.service';
 })
 export class StudentCoursesComponent implements OnInit {
   courses: Course[] = [];
+  isModalOpen: boolean = false;
+
+  missingMsg;
+  selectedCoruseId;
+  selectedDayId;
 
   constructor(private studentService: StudentService) {}
 
@@ -21,5 +26,30 @@ export class StudentCoursesComponent implements OnInit {
 
   onYesAttendance(courseId: string, dayId: string) {
     this.studentService.accpetAttendance(courseId, dayId);
+  }
+
+  onClickCloseModal() {
+    this.isModalOpen = false;
+  }
+
+  onNoAttendance() {
+    if (this.missingMsg) {
+      this.studentService
+        .denyAttendance(
+          this.selectedCoruseId,
+          this.selectedDayId,
+          this.missingMsg
+        )
+        .subscribe(() => {
+          this.missingMsg = '';
+          this.isModalOpen = false;
+        });
+    }
+  }
+
+  editVars(courseId: string, dayId: string) {
+    this.isModalOpen = true;
+    this.selectedCoruseId = courseId;
+    this.selectedDayId = dayId;
   }
 }

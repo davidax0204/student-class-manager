@@ -75,9 +75,19 @@ export class StudentService {
       .pipe(
         map((courses) => {
           this.courses.next(courses);
-          console.log(courses);
         })
       )
       .subscribe();
+  }
+  denyAttendance(courseId: String, dayId: string, reason: string) {
+    return this.http
+      .post<Course[]>(`${mongooseDB}/course/deny/${courseId}/${dayId}`, {
+        reason,
+      })
+      .pipe(
+        map((courses) => {
+          this.courses.next(courses);
+        })
+      );
   }
 }

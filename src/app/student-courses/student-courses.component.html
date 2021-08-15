@@ -22,10 +22,14 @@
 
 
           <div>
-            <label><b>Attendance</b>
+            <label><b style="margin-right: 5px;">Attendance:</b>
+              <span *ngIf="day.attendance">Yes</span>
+              <span *ngIf="!day.attendance">No</span>
+              <div *ngIf="!day.attendance"><b style="margin-right: 5px;">Reason:</b>{{day.reason}}</div>
               <div class="user-card-buttons-actions">
                 <button (click)="onYesAttendance(course._id,day._id)">Yes</button>
-                <button style="margin-left: 10px !important;">No</button>
+                <button (click)="editVars(course._id,day._id)"
+                        style="margin-left: 10px !important;">No</button>
               </div>
             </label>
           </div>
@@ -34,4 +38,22 @@
       </div>
     </div>
 
+  </div>
+
+  <div id="myModal"
+       *ngIf="isModalOpen"
+       class="modal">
+    <div class="modal-content">
+      <span (click)="onClickCloseModal()"
+            class="close">&times;</span>
+      <div class="sign-up-line-wrap">
+        <label><b>Reson</b></label>
+        <input type="text"
+               placeholder="Enter the reason why you were missing"
+               [(ngModel)]="missingMsg">
+        <button type="button"
+                class="registerbtn"
+                (click)="onNoAttendance()">Send</button>
+      </div>
+    </div>
   </div>
