@@ -16,7 +16,7 @@ const mongooseDB = environment.NODEJS_SERVER;
 })
 export class LecturerService {
   students = new BehaviorSubject<Student[]>(null);
-  selectedStudent = new BehaviorSubject<Student>(null);
+  selectedStudent = new Subject<Student>();
 
   courses = new BehaviorSubject<Course[]>(null);
   selectedCourse = new Subject<Course>();

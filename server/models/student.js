@@ -90,6 +90,7 @@ const studentSchema = new mongoose.Schema({
           },
           reason: {
             type: String,
+            default: "You didnt approved your attendance yet",
           },
         },
       ],

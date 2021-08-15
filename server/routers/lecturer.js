@@ -178,7 +178,7 @@ router.get(
               student.courses[index + previousStudentCoruseLength].days.concat({
                 courseDate: datesArray[day],
                 attendance: false,
-                reason: "",
+                reason: "The student has yet accept his attendance",
               });
           }
         }

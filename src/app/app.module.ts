@@ -24,6 +24,8 @@ import { CoursesComponent } from './courses/courses.component';
 import { CourseEditPageComponent } from './course-edit-page/course-edit-page.component';
 import { CourseStudnetsEditComponent } from './course-studnets-edit/course-studnets-edit.component';
 import { StudentCoursesComponent } from './student-courses/student-courses.component';
+import { StudentAttendanceComponent } from './student-attendance/student-attendance.component';
+import { StudentCoursesResolver } from 'src/resolvers/student-courses.resolver';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { StudentCoursesComponent } from './student-courses/student-courses.compo
     CourseEditPageComponent,
     CourseStudnetsEditComponent,
     StudentCoursesComponent,
+    StudentAttendanceComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -56,6 +59,7 @@ import { StudentCoursesComponent } from './student-courses/student-courses.compo
     StudentAuthGuard,
     LecturerAuthGuard,
     DatePipe,
+    StudentCoursesResolver,
   ],
   bootstrap: [AppComponent],
 })

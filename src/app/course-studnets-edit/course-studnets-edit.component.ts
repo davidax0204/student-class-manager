@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/models/course.model';
 import { Student } from 'src/models/student.model';
@@ -19,15 +20,20 @@ export class CourseStudnetsEditComponent implements OnInit, OnDestroy {
   isModalOpen: boolean = false;
   msg: string = '';
 
-  constructor(private LecturerService: LecturerService) {}
+  constructor(
+    private LecturerService: LecturerService,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.LecturerService.getStudents();
+
     this.studentsSub = this.LecturerService.students.subscribe(
       (students: Student[]) => {
         this.students = students;
       }
     );
+
     this.LecturerService.selectedCourse.subscribe((course: Course) => {
       this.selectedCourse = course;
     });
