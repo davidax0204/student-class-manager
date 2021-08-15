@@ -16,6 +16,9 @@ export class CourseStudnetsEditComponent implements OnInit, OnDestroy {
   selectedCourse: Course;
   courseSub: Subscription;
 
+  isModalOpen: boolean = false;
+  msg: string = '';
+
   constructor(private LecturerService: LecturerService) {}
 
   ngOnInit(): void {
@@ -35,14 +38,23 @@ export class CourseStudnetsEditComponent implements OnInit, OnDestroy {
     // this.courseSub.unsubscribe();
   }
 
-  onAsignStudent(studentId) {
-    console.log(studentId);
+  onClickCloseModal() {
+    this.isModalOpen = false;
+  }
 
+  onAsignStudent(studentId) {
     this.LecturerService.asignStudentToCourse(
       studentId,
       this.selectedCourse._id
+    ).subscribe(
+      () => {},
+      (errorMessage) => {
+        this.isModalOpen = true;
+        this.msg = errorMessage;
+      }
     );
   }
+
   onRemoveStudentCourse(studentId) {
     this.LecturerService.removeStudentFromCourse(
       studentId,

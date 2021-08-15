@@ -120,6 +120,8 @@ export class LecturerAuthService {
   public handleError(errorResponse: HttpErrorResponse) {
     let errorMessage = 'An Unknown error occurred!';
 
+    console.log('here');
+
     if (!errorResponse.error) {
       return throwError(errorMessage);
     }
@@ -139,6 +141,10 @@ export class LecturerAuthService {
 
       case 'COURSE_NOT_UNIQUE':
         errorMessage = 'The Course name is taken';
+        break;
+      case 'NO_COURSE_DATES':
+        errorMessage =
+          'This course doesnt contain proper hours. You must add course hours before assigning studnets';
         break;
     }
 

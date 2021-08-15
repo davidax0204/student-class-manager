@@ -206,34 +206,39 @@ router.get(
       let startDate = new Date(course.startDate);
       let endDate = new Date(course.endDate);
 
-      for (let index = 0; index < course.times.length; index++) {
-        let datesArray = eachDayOfInterval({
-          start: startDate,
-          end: endDate,
-        }).filter((weekDay) => getDay(weekDay) == course.times[index].weekDay);
+      if (course.times.length > 0) {
+        for (let index = 0; index < course.times.length; index++) {
+          let datesArray = eachDayOfInterval({
+            start: startDate,
+            end: endDate,
+          }).filter(
+            (weekDay) => getDay(weekDay) == course.times[index].weekDay
+          );
 
-        student.courses = student.courses.concat({
-          courseId: course._id,
-          name: course.name,
-          startTime: course.times[index].startTime,
-          endTime: course.times[index].endTime,
-        });
+          student.courses = student.courses.concat({
+            courseId: course._id,
+            name: course.name,
+            startTime: course.times[index].startTime,
+            endTime: course.times[index].endTime,
+          });
 
-        for (let day = 0; day < datesArray.length; day++) {
-          student.courses[index + previousStudentCoruseLength].days =
-            student.courses[index + previousStudentCoruseLength].days.concat({
-              courseDate: datesArray[day],
-              attendance: false,
-              reason: "",
-            });
+          for (let day = 0; day < datesArray.length; day++) {
+            student.courses[index + previousStudentCoruseLength].days =
+              student.courses[index + previousStudentCoruseLength].days.concat({
+                courseDate: datesArray[day],
+                attendance: false,
+                reason: "",
+              });
+          }
         }
+      } else {
+        throw new Error("NO_COURSE_DATES");
       }
 
       await student.save();
       const students = await Student.find({});
       res.status(200).send(students);
     } catch (e) {
-      console.log(e);
       res.status(404).send(e.message);
     }
   }
@@ -244,8 +249,6 @@ router.get(
   lecturerAuth,
   async (req, res) => {
     try {
-      const student = await Student.findOne({ _id: req.params.studentId });
-
       await Student.updateMany(
         { _id: req.params.studentId },
         { $pull: { courses: { courseId: req.params.courseId } } },
@@ -261,6 +264,24 @@ router.get(
   }
 );
 
-// student.days.day.pull({ courseId: "61155838b1fff211dd9a8765" });
+router.get(
+  "/remove-students-course/:courseId",
+  lecturerAuth,
+  async (req, res) => {
+    try {
+      await Student.updateMany(
+        { "courses.courseId": req.params.courseId },
+        { $pull: { courses: { courseId: req.params.courseId } } },
+        { new: true }
+      );
+
+      const students = await Student.find({});
+      res.status(200).send(students);
+    } catch (e) {
+      console.log(e);
+      res.status(404).send(e.message);
+    }
+  }
+);
 
 module.exports = router;

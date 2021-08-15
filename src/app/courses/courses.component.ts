@@ -32,12 +32,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   onAsignStudentsToCourse(courseId) {
-    console.log(courseId);
-
     this.LecturerService.getCourse(courseId);
   }
 
   deleteCourse(courseId) {
+    this.LecturerService.removeStudentsFromAssignedCourse(courseId);
     this.LecturerService.deleteCourse(courseId);
   }
 }

@@ -181,6 +181,22 @@ export class LecturerService {
       .pipe(
         map((courses) => {
           this.courses.next(courses);
+          // this.students.subscribe((students) => {
+          //   students.forEach((student) => {
+          //     this.removeStudentFromCourse(student._id, courseId);
+          //   });
+          // });
+        })
+      )
+      .subscribe();
+  }
+
+  removeStudentsFromAssignedCourse(courseId: string) {
+    this.http
+      .get<Student[]>(`${mongooseDB}/remove-students-course/${courseId}`)
+      .pipe(
+        map((students) => {
+          this.students.next(students);
         })
       )
       .subscribe();
@@ -195,16 +211,16 @@ export class LecturerService {
   }
 
   asignStudentToCourse(studentId: string, courseId: string) {
-    this.http
+    return this.http
       .get<Student[]>(
         `${mongooseDB}/asign-course/${courseId}/student/${studentId}`
       )
       .pipe(
+        catchError(this.LecturerAuthService.handleError),
         map((students) => {
           this.students.next(students);
         })
-      )
-      .subscribe();
+      );
   }
 
   removeStudentFromCourse(studentId: string, courseId: string) {

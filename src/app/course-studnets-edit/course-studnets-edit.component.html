@@ -33,3 +33,14 @@
     </div>
   </div>
 </div>
+
+
+<div id="myModal"
+     *ngIf="isModalOpen"
+     class="modal">
+  <div class="modal-content">
+    <span (click)="onClickCloseModal()"
+          class="close">&times;</span>
+    <p>{{msg}}.</p>
+  </div>
+</div>
