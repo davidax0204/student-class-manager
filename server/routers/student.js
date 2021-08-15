@@ -53,49 +53,31 @@ router.get("/courses", auth, (req, res) => {
 
 router.get("/course/accept/:courseId/:dayId", auth, async (req, res) => {
   try {
-    const student = await Student.findOne({ _id: "61177907a4cde2443c37f319" });
-
-    // await Student.findOneAndUpdate(
-    //   { "courses.days._id": "6117b0c45345db20f0dc3336" },
-    //   { $set: { "courses.$.days.$.attendance": true } },
-    //   { new: true }
-    // );
-
-    // await Student.findOneAndUpdate(
-    //   { "courses.days._id": req.params.dayId },
-    //   { "courses.$[courseIndex].days.$[dayIndex].attendance": true },
-    //   {
-    //     arrayFilters: [
-    //       {
-    //         "courseIndex.courseId": Mongoose.Types.ObjectId(
-    //           req.params.courseId
-    //         ),
-    //       },
-    //       {
-    //         "dayIndex.dayId": Mongoose.Types.ObjectId(req.params.dayId),
-    //       },
-    //     ],
-    //   }
-    // );
+    const student = req.student;
 
     await Student.findOneAndUpdate(
-      { "courses.days._id": Mongoose.Types.ObjectId(req.params.dayId) },
+      {
+        courses: {
+          $elemMatch: { _id: Mongoose.Types.ObjectId(req.params.courseId) },
+        },
+        "courses.days": {
+          $elemMatch: { _id: Mongoose.Types.ObjectId(req.params.dayId) },
+        },
+      },
       { "courses.$[courseIndex].days.$[dayIndex].attendance": true },
       {
         arrayFilters: [
           {
-            courseIndex: Number(0),
+            "courseIndex._id": Mongoose.Types.ObjectId(req.params.courseId),
           },
           {
-            dayIndex: Number(0),
+            "dayIndex._id": Mongoose.Types.ObjectId(req.params.dayId),
           },
         ],
       }
     );
 
-    console.log(student);
-
-    // res.status(200).send(student.courses);
+    res.status(200).send(student);
   } catch (e) {
     console.log(e);
     res.status(404).send(e.message);
