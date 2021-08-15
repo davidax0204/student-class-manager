@@ -1,7 +1,8 @@
 const express = require("express");
 const Student = require("../models/student");
-const Lecturer = require("../models/lecturer");
+const Course = require("../models/course");
 const auth = require("../middleware/auth");
+const Mongoose = require("mongoose");
 
 const router = new express.Router();
 
@@ -37,6 +38,66 @@ router.get("/student-log-out", auth, async (req, res) => {
     await req.student.save();
     res.status(200).send();
   } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+router.get("/courses", auth, (req, res) => {
+  try {
+    const student = req.student;
+    res.status(200).send(student.courses);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+});
+
+router.get("/course/accept/:courseId/:dayId", auth, async (req, res) => {
+  try {
+    const student = await Student.findOne({ _id: "61177907a4cde2443c37f319" });
+
+    // await Student.findOneAndUpdate(
+    //   { "courses.days._id": "6117b0c45345db20f0dc3336" },
+    //   { $set: { "courses.$.days.$.attendance": true } },
+    //   { new: true }
+    // );
+
+    // await Student.findOneAndUpdate(
+    //   { "courses.days._id": req.params.dayId },
+    //   { "courses.$[courseIndex].days.$[dayIndex].attendance": true },
+    //   {
+    //     arrayFilters: [
+    //       {
+    //         "courseIndex.courseId": Mongoose.Types.ObjectId(
+    //           req.params.courseId
+    //         ),
+    //       },
+    //       {
+    //         "dayIndex.dayId": Mongoose.Types.ObjectId(req.params.dayId),
+    //       },
+    //     ],
+    //   }
+    // );
+
+    await Student.findOneAndUpdate(
+      { "courses.days._id": Mongoose.Types.ObjectId(req.params.dayId) },
+      { "courses.$[courseIndex].days.$[dayIndex].attendance": true },
+      {
+        arrayFilters: [
+          {
+            courseIndex: Number(0),
+          },
+          {
+            dayIndex: Number(0),
+          },
+        ],
+      }
+    );
+
+    console.log(student);
+
+    // res.status(200).send(student.courses);
+  } catch (e) {
+    console.log(e);
     res.status(404).send(e.message);
   }
 });

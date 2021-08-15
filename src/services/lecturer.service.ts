@@ -181,11 +181,6 @@ export class LecturerService {
       .pipe(
         map((courses) => {
           this.courses.next(courses);
-          // this.students.subscribe((students) => {
-          //   students.forEach((student) => {
-          //     this.removeStudentFromCourse(student._id, courseId);
-          //   });
-          // });
         })
       )
       .subscribe();

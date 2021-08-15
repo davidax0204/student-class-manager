@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
+import { Course } from 'src/models/course.model';
 import { Student } from 'src/models/student.model';
 import { StudentAuthService } from './student-auth.service';
 const mongooseDB = environment.NODEJS_SERVER;
@@ -12,6 +13,9 @@ const mongooseDB = environment.NODEJS_SERVER;
   providedIn: 'root',
 })
 export class StudentService {
+  courses = new Subject<Course[]>();
+  selectedCourse = new Subject<Course>();
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -52,5 +56,22 @@ export class StudentService {
           );
         })
       );
+  }
+
+  getCourses() {
+    this.http
+      .get<Course[]>(`${mongooseDB}/courses`)
+      .pipe(
+        map((courses) => {
+          this.courses.next(courses);
+        })
+      )
+      .subscribe();
+  }
+
+  accpetAttendance(courseId: String, dayId: string) {
+    this.http
+      .get(`${mongooseDB}/course/accept/${courseId}/${dayId}`)
+      .subscribe();
   }
 }

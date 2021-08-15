@@ -163,23 +163,6 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmitProfileEditForm() {
-    // let startDate = new Date(this.courseStartDate.value);
-    // let endDate = new Date(this.courseEndDate.value);
-    // let datesArray: Date[] = eachDayOfInterval({
-    //   start: startDate,
-    //   end: endDate,
-    // }).filter((weekDay) => getDay(weekDay) == 0);
-    // console.log(datesArray);
-
-    // this.timesArray = this.courseForm.get('timesArray') as FormArray;
-
-    // let course: Course = new Course(
-    //   this.courseName.value,
-    //   this.courseStartDate.value,
-    //   this.courseEndDate.value,
-    //   this.courseForm.value.timesArray
-    // );
-
     this.LecturerService.editCourseDetails(
       this.courseName.value,
       this.courseStartDate.value,
